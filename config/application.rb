@@ -29,6 +29,7 @@ module GARRANGE
 
     # Don't generate system test files.
     # config.generators.system_tests = nil
+    config.i18n.default_locale = :ja
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: false,
