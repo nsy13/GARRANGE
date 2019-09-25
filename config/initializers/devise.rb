@@ -8,7 +8,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '2fff188e2c53262177fcc88aa67c95915568a25793521d7323208a62950d4e1efcc4fb30ba2c974dfc80d3ab7f8ed437756a1f8d737db4e5185725b56298b41a'
+  # config.secret_key ='2fff188e2c53262177fcc88aa67c95915568a25793521d7323208a62950d4e1efcc4fb30ba2c974dfc80d3ab7f8ed437756a1f8d737db4e5185725b56298b41a'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -298,9 +298,9 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   config.omniauth :google_oauth2,
-    Rails.application.credentials.google[:client_id],
-    Rails.application.credentials.google[:client_secret]
+                  Rails.application.credentials.google[:client_id],
+                  Rails.application.credentials.google[:client_secret]
   config.omniauth :facebook,
-    Rails.application.credentials.facebook[:client_id],
-    Rails.application.credentials.facebook[:client_secret]
+                  Rails.application.credentials.facebook[:client_id],
+                  Rails.application.credentials.facebook[:client_secret]
 end

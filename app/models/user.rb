@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
+         :omniauthable, omniauth_providers: %i(facebook google_oauth2)
 
   def self.find_oauth(auth)
     uid = auth.uid
@@ -18,20 +18,20 @@ class User < ApplicationRecord
           uid: uid,
           provider: provider,
           user_id: user.id
-          )
+        )
       else
         user = User.create(
           name: auth.info.name,
           email:    auth.info.email,
           password: Devise.friendly_token[0, 20],
-          )
+        )
         SnsCredential.create(
           uid: uid,
           provider: provider,
           user_id: user.id
-          )
+        )
       end
     end
-    return user
+    user
   end
 end

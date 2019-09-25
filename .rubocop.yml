@@ -1,0 +1,41 @@
+inherit_from:
+  - .rubocop_airbnb.yml
+
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'bin/*'
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 128
+  Exclude:
+    - "db/migrate/*.rb"
+    - "config/initializers/devise.rb"
+
+Metrics/AbcSize:
+  Max: 25
+
+Style/TrailingCommaInHashLiteral:
+  Exclude:
+    - "config/environments/*.rb"
+
+Layout/AlignParameters:
+  Exclude:
+    - "config/application.rb"
+
+Style/BlockComments:
+  Exclude:
+    - "spec/spec_helper.rb"
