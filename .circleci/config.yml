@@ -56,7 +56,7 @@ workflows:
   build_and_deploy:
     jobs:
       - build:
-        context: GARRANGE_ENV
+          context: GARRANGE_ENV
       - deploy:
           requires:
             - build
