@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title
+      | GARRANGE
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    header
+      nav
+        - if user_signed_in?
+          |  Logged in as
+          strong
+            = current_user.email
+          | .
+          = link_to "編集", edit_user_registration_path
+          |  |
+          = link_to "ログアウト", destroy_user_session_path, method: :delete
+        - else
+          = link_to "サインイン", new_user_registration_path
+          |  |
+          = link_to "ログイン", new_user_session_path
+          = link_to "Facebookログイン", user_facebook_omniauth_authorize_path
+          = link_to "Googleログイン", user_google_oauth2_omniauth_authorize_path
+    p.notice
+      = notice
+    p.alert
+      = alert
+    = yield
