@@ -10,7 +10,9 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
@@ -19,15 +21,19 @@
 //= require fullcalendar/locale-all
 //= require_tree .
 
-function eventCalendar() {
-  return $('#calendar').fullCalendar({ });
-};
-function clearCalendar() {
-  $('#calendar').fullCalendar('delete');
-  $('#calendar').html('');
-};
-
-$(document).on('turbolinks:load', function(){
+$(function () {
+  function eventCalendar() {
+      return $('#calendar').fullCalendar({});
+  };
+  function clearCalendar() {
+      $('#calendar').html('');
+  };
+  $(document).on('turbolinks:load', function () {
   eventCalendar();
+  });
+  $(document).on('turbolinks:before-cache', clearCalendar);
+
+  $('#calendar').fullCalendar({
+  events: '/events.json'
+  });
 });
-$(document).on('turbolinks:before-cache', clearCalendar);

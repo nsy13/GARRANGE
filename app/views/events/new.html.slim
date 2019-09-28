@@ -1,2 +1,23 @@
-h1 Events#new
-p Find me in app/views/events/new.html.slim
+= form_with class: "form-group", model: @event do |f|
+  div.row
+    div.col-md-8.offset-md-2
+      = f.label "タイトル", class: "form-control"
+      = f.text_field :title, class: "form-control"
+      = f.label "詳細", class: "form-control"
+      = f.text_field :description, class: "form-control"
+      = f.label "開始", class: "form-control"
+      = f.datetime_select :start_date,
+                          user_month_numbers: true,
+                          minute_step: 30,
+                          start_year: Time.current.year,
+                          end_year: Time.current.year + 5,
+                          class: "form-control"
+      = f.label "終了", class: "form-control"
+      = f.datetime_select :end_date,
+                          user_month_numbers: true,
+                          minute_step: 30,
+                          start_year: Time.current.year,
+                          end_year: Time.current.year + 5,
+                          class: "form-control"
+      = hidden_field_tag "organizer_id", current_user.id
+      = f.submit class: "btn-lg btn-primay form-control"
