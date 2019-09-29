@@ -1,2 +1,42 @@
-h1 Events#edit
-p Find me in app/views/events/edit.html.slim
+= form_with model: @event, local:true do |f|
+  = render "shared/error_messages", object: f.object
+  div.row.form-group
+    div.col-sm-2
+      = f.label "タイトル", class: "col-form-label"
+    div.col-sm-8
+      = f.text_field :title, class: "form-control"
+  div.row.form-group
+    div.col-sm-2
+      = f.label "詳細", class: "col-form-label"
+    div.col-sm-8
+      = f.text_area :description, class: "form-control"
+  div.row.form-group
+    div.col-sm-2
+      = f.label "場所", :place, class: "col-form-label"
+    div.col-sm-8
+      = f.text_field :place, class: "form-control"
+  div.row.form-group
+    div.col-sm-2
+      = f.label "開始", class: "col-form-label"
+    div.col-sm-8
+      = f.datetime_select :start_date,
+                          user_month_numbers: true,
+                          minute_step: 30,
+                          start_year: Time.current.year,
+                          end_year: Time.current.year + 5,
+                          class: "form-control custom-select",
+                          id: "inlineFormCustomSelect"
+  div.row.form-group
+    div.col-sm-2
+      = f.label "終了", class: "col-form-label"
+    div.col-sm-8
+      = f.datetime_select :end_date,
+                          user_month_numbers: true,
+                          minute_step: 30,
+                          start_year: Time.current.year,
+                          end_year: Time.current.year + 5,
+                          class: "form-control"
+      = hidden_field_tag "organizer_id", current_user.id
+  div.row.form-group
+    div.col-sm-10
+      = f.submit class: "btn btn-primary"
