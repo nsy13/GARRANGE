@@ -1,0 +1,2 @@
+class Gcal < ApplicationRecord
+end
