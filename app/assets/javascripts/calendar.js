@@ -11,7 +11,7 @@ $(function () {
   $(document).on('turbolinks:before-cache', clearCalendar);
 
   $('#calendar').fullCalendar({
-    events: '/events.json',
+    events: '/home/index.json',
     eventSources: [
       {
         url: 'gcals/get_google_calendar_event',

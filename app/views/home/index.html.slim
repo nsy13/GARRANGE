@@ -1,3 +1,11 @@
-h1
-  | Home#index
-div#calendar
+.row
+  .col-sm-4
+    .calendar-lists
+      = form_with url: root_path do |f|
+        - @calendars.each do |calendar|
+          = check_box_tag "#{calendar.name}"
+          = label_tag "#{calendar.name}"
+    .event-form-link
+      = link_to "イベントを作成する", new_event_path, class: "btn btn-primary"
+  .col-sm-8
+    #calendar
