@@ -12,51 +12,51 @@ class GcalsController < ApplicationController
     redirect_to calendars_path
   end
 
-  def calendars
-    begin
-      client = Signet::OAuth2::Client.new(client_options)
-      client.update!(session[:authorization])
-      service = Google::Apis::CalendarV3::CalendarService.new
-      service.authorization = client
-      @calendar_list = service.list_calendar_lists
-    rescue Google::Apis::AuthorizationError, Signet::AuthorizationError
-      # FIXME: refresh_token 未実装
-      redirect_to gcal_redirect_path
-    end
-  end
+  # def calendars
+  #   begin
+  #     client = Signet::OAuth2::Client.new(client_options)
+  #     client.update!(session[:authorization])
+  #     service = Google::Apis::CalendarV3::CalendarService.new
+  #     service.authorization = client
+  #     @calendar_list = service.list_calendar_lists
+  #   rescue Google::Apis::AuthorizationError, Signet::AuthorizationError
+  #     # FIXME: refresh_token 未実装
+  #     redirect_to gcal_redirect_path
+  #   end
+  # end
 
-  def events
-    begin
-      client = Signet::OAuth2::Client.new(client_options)
-      client.update!(session[:authorization])
-      service = Google::Apis::CalendarV3::CalendarService.new
-      service.authorization = client
-      @event_list = service.list_events(params[:calendar_id])
-    rescue Google::Apis::AuthorizationError, Signet::AuthorizationError
-      # FIXME: refresh_token 未実装
-      redirect_to gcal_redirect_path
-    end
-  end
+  # def events
+  #   begin
+  #     client = Signet::OAuth2::Client.new(client_options)
+  #     client.update!(session[:authorization])
+  #     service = Google::Apis::CalendarV3::CalendarService.new
+  #     service.authorization = client
+  #     @event_list = service.list_events(params[:calendar_id])
+  #   rescue Google::Apis::AuthorizationError, Signet::AuthorizationError
+  #     # FIXME: refresh_token 未実装
+  #     redirect_to gcal_redirect_path
+  #   end
+  # end
 
-  def new_event
-    begin
-      client = Signet::OAuth2::Client.new(client_options)
-      client.update!(session[:authorization])
-      service = Google::Apis::CalendarV3::CalendarService.new
-      service.authorization = client
-      today = Date.today
-      event = Google::Apis::CalendarV3::Event.new({
-        start: Google::Apis::CalendarV3::EventDateTime.new(date: today),
-        end: Google::Apis::CalendarV3::EventDateTime.new(date: today + 1),
-        summary: 'New event!'
-      })
-      service.insert_event(params[:calendar_id], event)
-      redirect_to events_url(calendar_id: params[:calendar_id])
-    rescue Google::Apis::AuthorizationError, Signet::AuthorizationError
-      # FIXME: refresh_token 未実装
-      redirect_to gcal_redirect_path
-    end
-  end
+  # def new_event
+  #   begin
+  #     client = Signet::OAuth2::Client.new(client_options)
+  #     client.update!(session[:authorization])
+  #     service = Google::Apis::CalendarV3::CalendarService.new
+  #     service.authorization = client
+  #     today = Date.today
+  #     event = Google::Apis::CalendarV3::Event.new({
+  #       start: Google::Apis::CalendarV3::EventDateTime.new(date: today),
+  #       end: Google::Apis::CalendarV3::EventDateTime.new(date: today + 1),
+  #       summary: 'New event!'
+  #     })
+  #     service.insert_event(params[:calendar_id], event)
+  #     redirect_to events_url(calendar_id: params[:calendar_id])
+  #   rescue Google::Apis::AuthorizationError, Signet::AuthorizationError
+  #     # FIXME: refresh_token 未実装
+  #     redirect_to gcal_redirect_path
+  #   end
+  # end
 
   private
 
