@@ -10,8 +10,11 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_user.events.create(event_params)
-    if Event.find_by(id: @event.id)
+    # TODO: トップページ等からカレンダーを選択してイベントを作成できるように修正
+    # TODO: イベントとユーザーの紐付けも追加する user_id = current_user.idとか
+    @calendar = Calendar.find(params[:id])
+    @event = @calendar.events.build(event_params)
+    if @event.save
       flash[:success] = "イベントを追加しました"
       redirect_to root_path
     else
