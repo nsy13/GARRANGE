@@ -1,28 +1,29 @@
-.row
-  .col-sm-4
-    .calendars-list
-      p カレンダー一覧
-      = form_with url: root_path do |f|
-        - @calendars.each do |calendar|
+- if user_signed_in?
+  .row
+    .col-sm-4
+      .calendars-list
+        p カレンダー一覧
+        = form_with url: root_path do |f|
+          - @calendars.each do |calendar|
+            .form-group
+              = check_box_tag "calendar-#{calendar.id}", class: "form-control"
+              = label_tag "calendar-#{calendar.id}", "#{calendar.name}"
+      .events-list
+        p イベント一覧
+        / render @events のようにrails wayに乗る
+        - current_user.events.each do |event|
           .form-group
-            = check_box_tag "calendar-#{calendar.id}", class: "form-control"
-            = label_tag "calendar-#{calendar.id}", "#{calendar.name}"
-    .events-list
-      p イベント一覧
-      / render @events のようにrails wayに乗る
-      - current_user.events.each do |event|
+            = link_to event.title, event_path(event.id)
+      .user-search-form
         .form-group
-          = link_to event.title, event_path(event.id)
-    .user-search-form
-      .form-group
-        p ユーザーを探す
-        form.form-inline
-          input.form-control type="search" placeholder="メールアドレスで検索" aria-label="Search"
-            button.btn.btn-outline-success type="submit" 検索
-    .event-form-link
-      = link_to "イベントを作成する", new_event_path, class: "btn btn-primary", remote: true
-  .col-sm-8
-    #calendar
+          p ユーザーを探す
+          form.form-inline
+            input.form-control type="search" placeholder="メールアドレスで検索" aria-label="Search"
+              button.btn.btn-outline-success type="submit" 検索
+      .event-form-link
+        = link_to "イベントを作成する", new_event_path, class: "btn btn-primary", remote: true
+    .col-sm-8
+      #calendar
 
-/ event create modal
-#event-form.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
+  / event create modal
+  #event-form.modal.fade tabindex="-1" role="dialog" aria-hidden="true"

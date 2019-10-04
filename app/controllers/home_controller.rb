@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     #TODO: 共有したカレンダーの表示機能も実装
     @calendars = current_user.calendars
