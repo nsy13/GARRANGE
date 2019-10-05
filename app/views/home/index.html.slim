@@ -7,15 +7,17 @@
           .form-group
             = check_box_tag "select-calendar[]", calendar.name, false, { id: "calendar-#{calendar.id}" }
             = label_tag "calendar-#{calendar.id}", "#{calendar.name}"
-      .events-list
+      .events-index
         h5 イベント一覧
         p カレンダーを選択してください
         / render @events のようにrails wayに乗る
         - @events.each.with_index(1) do |events, index|
-          div class="calendar-#{index}"
-            - events.each do |event|
-              .form-group
-                = link_to event.title, event_path(event.id)
+          div class="calendar-#{index} event-list"
+            = events.first.calendar.name
+            .event-title
+              - events.each do |event|
+                .form-group
+                  = link_to event.title, event_path(event.id)
       .user-search-form
         .form-group
           h5 ユーザーを探す
