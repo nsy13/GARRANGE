@@ -10,9 +10,11 @@
       .events-list
         p イベント一覧
         / render @events のようにrails wayに乗る
-        - current_user.events.each do |event|
-          .form-group
-            = link_to event.title, event_path(event.id)
+        - @events.each.with_index(1) do |events, index|
+          div class="calendar-#{index}"
+            - events.each do |event|
+              .form-group
+                = link_to event.title, event_path(event.id)
       .user-search-form
         .form-group
           p ユーザーを探す

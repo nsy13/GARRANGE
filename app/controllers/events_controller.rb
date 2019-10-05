@@ -1,10 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
 
-  def index
-    @events = Event.all
-  end
-
   def new
     @event = Event.new
     @calendars = current_user.calendars
@@ -19,7 +15,6 @@ class EventsController < ApplicationController
   def create
     @calendar = Calendar.find(params[:event][:calendar_id])
     @event = @calendar.events.build(event_params)
-    byebug
     if @event.save
       @event.user_events.create(user_id: current_user.id)
       flash[:success] = "イベントを追加しました"
