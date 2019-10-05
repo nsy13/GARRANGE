@@ -12,12 +12,12 @@ $(function () {
 
   $('#calendar').fullCalendar({
     events: '/home/index.json',
-    eventSources: [
-      {
-        url: 'gcals/get_google_calendar_event',
-        dataType: 'json',
-        type: 'get'
-      }
-    ],
+    // eventSources: [
+    //   {
+    //     url: 'gcals/get_google_calendar_event',
+    //     dataType: 'json',
+    //     type: 'get'
+    //   }
+    // ],
   });
 });

@@ -7,12 +7,19 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @calendars = current_user.calendars
+    if params[:selected_calendars]
+      selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
+      @calendar = Calendar.find_by(id: selected_calendars_id[0])
+    else
+      @calendar = @calendars.first
+    end
   end
 
   def create
-    # TODO: トップページ等からカレンダーを選択してイベントを作成できるように修正
-    @calendar = Calendar.first
+    @calendar = Calendar.find(params[:event][:calendar_id])
     @event = @calendar.events.build(event_params)
+    byebug
     if @event.save
       @event.user_events.create(user_id: current_user.id)
       flash[:success] = "イベントを追加しました"
