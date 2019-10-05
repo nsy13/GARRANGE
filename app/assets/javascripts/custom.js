@@ -1,9 +1,9 @@
 jQuery(document).ready(function() {
-  $('.events-list').children().hide();
+  $('.events-list').children('div').hide();
 	$('input[name="select-calendar[]"]').change(function() {
     // 初期化
     $('input[name="selected-calendars"]').remove();
-    $('.events-list').children().hide();
+    $('.events-list').children('div').hide();
 
     // submitへのhidden要素追加
     var selected_calendars = [];
@@ -17,9 +17,13 @@ jQuery(document).ready(function() {
     }).appendTo($('.selected-calendar'));
 
     // events-listの要素表示
-    $.each(selected_calendars, function(index, value) {
-      console.log(value);
-      $('.events-list').children('.' + value).show();
-    })
+    if (selected_calendars.length === 0) {
+      $('.events-list p').show();
+    } else {
+      $.each(selected_calendars, function(index, value) {
+        $('.events-list p').hide();
+        $('.events-list').children('.' + value).show();
+      });
+    }
 	});
 });

@@ -2,13 +2,14 @@
   .row
     .col-sm-4
       .calendars-list
-        p カレンダー一覧
+        h5 カレンダー一覧
         - @calendars.each do |calendar|
           .form-group
             = check_box_tag "select-calendar[]", calendar.name, false, { id: "calendar-#{calendar.id}" }
             = label_tag "calendar-#{calendar.id}", "#{calendar.name}"
       .events-list
-        p イベント一覧
+        h5 イベント一覧
+        p カレンダーを選択してください
         / render @events のようにrails wayに乗る
         - @events.each.with_index(1) do |events, index|
           div class="calendar-#{index}"
@@ -17,7 +18,7 @@
                 = link_to event.title, event_path(event.id)
       .user-search-form
         .form-group
-          p ユーザーを探す
+          h5 ユーザーを探す
           form.form-inline
             input.form-control type="search" placeholder="メールアドレスで検索" aria-label="Search"
               button.btn.btn-outline-success type="submit" 検索
