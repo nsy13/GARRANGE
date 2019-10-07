@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   get '/home/index', to: 'home#index'
-  get :ajax, to: 'home#ajax'
   # get 'gcals/get_google_calendar_event', to: 'gcals#get_google_calendar_event'
   # get '/gcal/redirect', to: 'gcals#redirect'
   # get '/gcal/callback', to: 'gcals#callback'
