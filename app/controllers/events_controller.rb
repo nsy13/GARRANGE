@@ -27,6 +27,8 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    @calendar = @event.calendar
+    @calendars = current_user.calendars
   end
 
   def show
