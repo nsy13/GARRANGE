@@ -16,9 +16,16 @@ function full_calendar(url = '/home/index.json') {
       month: '月',
       week: '週',
       day: '日'
-  },
+    },
     dayNamesShort: ['日','月','火','水','木','金','土'],
     timeFormat: "HH:mm",
     selectable: true,
-    });
+    editable: true,
+    eventClick: function(event, jsEvent, view) {
+      $.ajax({
+        type: 'GET',
+        url: 'events/' + event.id + '.js',
+      });
+    }
+  });
 };

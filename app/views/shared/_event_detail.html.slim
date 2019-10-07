@@ -1,0 +1,39 @@
+.modal-dialog.modal-lg
+  .modal-content
+    .modal-header
+      h5.modal-title イベント詳細
+      button.close type="button" data-dismiss="modal" aria-label="Close"
+        span aria-hidden="true" &times;
+    .modal-body
+      .row.form-group
+        .col-md-3
+          label.col-form-label タイトル
+        .col-md-8
+          .no-border = event.title
+      .row.form-group
+        .col-md-3
+          label.col-form-label 詳細
+        .col-md-8
+          - if event.description.empty?
+            .no-border.no-info （詳細情報はありません）
+          - else
+            .no-border = event.description
+      .row.form-group
+        .col-md-3
+          label.col-form-label 開始
+        .col-md-8
+          p.no-border = l event.start_date
+      .row.form-group
+        .col-md-3
+          label.col-form-label 終了
+        .col-md-8
+          p.no-border = l event.end_date
+      .row.form-group
+        .col-md-3
+          label.col-form-label 参加者
+        .col-md-8
+          p.no-border Aさん、Bさん、Cさん
+    .modal-footer
+      button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
+      .btn.btn-outline-primary = link_to "編集する", edit_event_path, remote: true
+

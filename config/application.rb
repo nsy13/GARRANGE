@@ -31,6 +31,7 @@ module GARRANGE
     # config.generators.system_tests = nil
     config.generators.template_engine = :slim
     config.i18n.default_locale = :ja
+    config.time_zone = 'Asia/Tokyo'
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: false,

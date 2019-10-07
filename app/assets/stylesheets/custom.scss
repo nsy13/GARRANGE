@@ -14,3 +14,14 @@ ul {
 .datetime-select {
   width: auto;
 }
+
+// event-detail modal
+.no-border {
+  border: 0;
+  border-bottom: solid 1px rgb(199, 199, 199);
+  border-radius: 0;
+}
+
+.no-info {
+  color: rgb(199, 199, 199);
+}
