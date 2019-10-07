@@ -3,10 +3,14 @@
     .col-sm-4
       .calendars-list
         h5 カレンダー一覧
-        - @calendars.each do |calendar|
-          .form-group
-            = check_box_tag "select-calendar[]", calendar.name, false, { id: "calendar-#{calendar.id}" }
-            = label_tag "calendar-#{calendar.id}", "#{calendar.name}"
+        = form_with url: root_path, method: :get, class: "select-calendar-form" do |f|
+          - @calendars.each.with_index(1) do |calendar, index|
+            .form-group
+              - if index == 1
+                = f.check_box "select-calendar", { id: "calendar-#{calendar.id}", checked: true }, calendar.name
+              - else
+                = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
+              = f.label "calendar-#{calendar.id}", "#{calendar.name}"
       .events-index
         h5 イベント一覧
         p カレンダーを選択してください
@@ -25,11 +29,10 @@
             input.form-control type="search" placeholder="メールアドレスで検索" aria-label="Search"
               button.btn.btn-outline-success type="submit" 検索
       .event-form-link
-        = form_with url: new_event_path, method: :get do |f|
-          .selected-calendar
+        = form_with url: new_event_path, class: "event-form", method: :get do |f|
           = f.submit "イベントを作成する", class: "btn btn-primary"
-    .col-sm-8
-      #calendar
+    .col-sm-8.fullcalendar
+      = render 'shared/fullcalendar'
 
   / event create modal
   #event-form.modal.fade tabindex="-1" role="dialog" aria-hidden="true"

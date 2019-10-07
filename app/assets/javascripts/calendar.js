@@ -1,23 +1,24 @@
-$(function () {
-  function eventCalendar() {
-    return $('#calendar').fullCalendar({});
-  };
-  function clearCalendar() {
-    $('#calendar').html('');
-  };
-  $(document).on('turbolinks:load', function () {
-    eventCalendar();
-  });
-  $(document).on('turbolinks:before-cache', clearCalendar);
-
-  $('#calendar').fullCalendar({
-    events: '/home/index.json',
-    // eventSources: [
-    //   {
-    //     url: 'gcals/get_google_calendar_event',
-    //     dataType: 'json',
-    //     type: 'get'
-    //   }
-    // ],
-  });
+$(document).ready(function() {
+  full_calendar();
 });
+
+function full_calendar(url = '/home/index.json') {
+  $('#calendar').fullCalendar({
+    events: url,
+    header: {
+      left: 'prev, next, today',
+      center: 'title',
+      right: 'month, agendaWeek, agendaDay',
+    },
+    titleFormat: 'YYYY年 M月',
+    buttonText: {
+      today: '今日',
+      month: '月',
+      week: '週',
+      day: '日'
+  },
+    dayNamesShort: ['日','月','火','水','木','金','土'],
+    timeFormat: "HH:mm",
+    selectable: true,
+    });
+};

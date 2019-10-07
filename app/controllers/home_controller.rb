@@ -5,7 +5,18 @@ class HomeController < ApplicationController
     #TODO: 共有したカレンダーの表示機能も実装
     #TODO: カレンダー、イベントをid順に並べる
     @calendars = current_user.calendars
-    @events = current_user.calendars.map { |c| c.events }
-    @display_events = @events.flatten #FIXME: jbuilder 向けの暫定対応
+    if params[:selected_calendars]
+      selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
+      if selected_calendars_id.include?(0)
+        @events = []
+      else
+        calendars = selected_calendars_id.map { |id| Calendar.find(id) }
+        @events = calendars.map { |calendar| calendar.events }
+      end
+      @display_events = @events.flatten
+    else
+      @events = current_user.calendars.map { |calendar| calendar.events }
+      @display_events = @events.first
+    end
   end
 end
