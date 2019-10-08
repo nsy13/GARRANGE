@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'notifications/index'
   root to: 'home#index'
   get '/home/index', to: 'home#index'
   post '/accept', to: 'events#accept'
