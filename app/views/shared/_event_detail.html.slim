@@ -22,17 +22,19 @@
         .col-md-3
           label.col-form-label 開始
         .col-md-8
-          p.no-border = l event.start_date
+          .no-border = l event.start_date
       .row.form-group
         .col-md-3
           label.col-form-label 終了
         .col-md-8
-          p.no-border = l event.end_date
+          .no-border = l event.end_date
       .row.form-group
         .col-md-3
           label.col-form-label 参加者
         .col-md-8
-          p.no-border Aさん、Bさん、Cさん
+          .no-border
+            - participants.each do |participant|
+              = link_to "#{participant.name}, ", root_path
     .modal-footer
       button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
       .btn.btn-outline-primary = link_to "編集する", edit_event_path, remote: true

@@ -29,14 +29,14 @@
             = f.text_field :place, class: "form-control"
         .row.form-group
           .col-md-3
-            = f.label :required_member, "必須メンバー", class: "col-form-label"
+            = f.label :participants, "参加者", class: "col-form-label"
           .col-md-9
-            = f.text_field :required_member, class: "form-control"
-        .row.form-group
-          .col-md-3
-            = f.label :request_member, "希望メンバー", class: "col-form-label"
-          .col-md-9
-            = f.text_field :request_member, class: "form-control"
+            = f.text_field :participants, class: "form-control"
+        / .row.form-group
+        /   .col-md-3
+        /     = f.label :request_member, "希望メンバー", class: "col-form-label"
+        /   .col-md-9
+        /     = f.text_field :request_member, class: "form-control"
         .row.form-group
           .col-md-3
             = f.label :start_date, "開始", class: "col-form-label"
