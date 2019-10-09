@@ -10,8 +10,9 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    @calendar = current_user.calendars.build(calendar_params)
+    @calendar = Calendar.new(calendar_params)
     if @calendar.save
+      current_user.user_calendars.create(calendar_id: @calendar.id, owner: true)
       flash[:success] = "カレンダーを作成しました"
       redirect_to root_path
     else
@@ -40,6 +41,11 @@ class CalendarsController < ApplicationController
   def destroy
     Calendar.find(params[:id]).destroy
     flash[:success] = "カレンダーを削除しました"
+    redirect_to root_path
+  end
+
+  def access_calender
+    UserCalender.create(user_id: current_user.id, calendar_id: params[:calendar][:id])
     redirect_to root_path
   end
 
