@@ -78,6 +78,11 @@ GEM
     diff-lcs (1.3)
     erubi (1.8.0)
     execjs (2.7.0)
+    factory_bot (5.1.1)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.1.1)
+      factory_bot (~> 5.1.0)
+      railties (>= 4.2.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
@@ -320,6 +325,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   devise
+  factory_bot_rails
   fullcalendar-rails
   google-api-client
   html2slim
