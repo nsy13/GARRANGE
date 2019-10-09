@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_09_073504) do
+ActiveRecord::Schema.define(version: 2019_10_09_083837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,12 +25,10 @@ ActiveRecord::Schema.define(version: 2019_10_09_073504) do
   end
 
   create_table "calendars", force: :cascade do |t|
-    t.bigint "user_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "color"
-    t.index ["user_id"], name: "index_calendars_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -60,6 +58,15 @@ ActiveRecord::Schema.define(version: 2019_10_09_073504) do
     t.index ["user_id"], name: "index_sns_credentials_on_user_id"
   end
 
+  create_table "user_calendars", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "calendar_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calendar_id"], name: "index_user_calendars_on_calendar_id"
+    t.index ["user_id"], name: "index_user_calendars_on_user_id"
+  end
+
   create_table "user_events", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "event_id"
@@ -85,9 +92,10 @@ ActiveRecord::Schema.define(version: 2019_10_09_073504) do
 
   add_foreign_key "calendar_events", "calendars"
   add_foreign_key "calendar_events", "events"
-  add_foreign_key "calendars", "users"
   add_foreign_key "gcals", "users"
   add_foreign_key "sns_credentials", "users"
+  add_foreign_key "user_calendars", "calendars"
+  add_foreign_key "user_calendars", "users"
   add_foreign_key "user_events", "events"
   add_foreign_key "user_events", "users"
 end
