@@ -16,12 +16,13 @@
         p カレンダーを選択してください
         / render @events のようにrails wayに乗る
         - @events.each.with_index(1) do |events, index|
-          div class="calendar-#{index} event-list"
-            = events.first.calendars.first.name
-            .event-title
-              - events.each do |event|
-                .form-group
-                  = link_to event.title, event_path(event.id)
+          - unless events.blank?
+            div class="calendar-#{index} event-list"
+              = events.first.calendars.first.name
+              .event-title
+                - events.each do |event|
+                  .form-group
+                    = link_to event.title, event_path(event.id)
       .user-search-form
         .form-group
           h5 ユーザーを探す

@@ -3,7 +3,6 @@ class HomeController < ApplicationController
 
   def index
     #TODO: 共有したカレンダーの表示機能も実装
-    #TODO: カレンダー、イベントをid順に並べる
     @calendars = current_user.calendars
     if params[:selected_calendars]
       selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
@@ -15,7 +14,7 @@ class HomeController < ApplicationController
       end
       @display_events = @events.flatten
     else
-      @events = current_user.calendars.map { |calendar| calendar.events }
+      @events = current_user.calendars.order(id: "ASC").map { |calendar| calendar.events }
       @display_events = @events.first
     end
   end

@@ -46,6 +46,6 @@ class CalendarsController < ApplicationController
   private
 
   def calendar_params
-    params.require(:calendar).permit(:name)
+    params.require(:calendar).permit(:name, :color)
   end
 end
