@@ -1,2 +1,14 @@
-h1 Notifications#index
-p Find me in app/views/notifications/index.html.slim
+招待中のイベントは
+- @invited_events.each do |invited|
+  .invited-events
+    = l invited.start_date
+    = l invited.end_date
+    = invited.title
+    .notification-detail = link_to "詳細を見る", event_path(id: invited.id), remote: true
+= link_to "ホームへ戻る", root_path
+/ event detail modal
+#event-detail.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
+
+
+  / = "#{l invited.start_date}"から"#{l invited.end_date}"まで開催予定の
+  / = "#{invited.title}"です。

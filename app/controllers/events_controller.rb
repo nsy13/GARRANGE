@@ -39,20 +39,31 @@ class EventsController < ApplicationController
     #FIXME: participantsが存在しない場合にバグ
     @event = Event.find(params[:id])
     @participants = []
-    participants_id = UserEvent.where(event_id: @event.id, accepted: true).map(&:user_id)
+    participants_id = @event.user_events.where(accepted: true).map(&:user_id)
     participants_id.each do |p_id|
       @participants << User.find_by(id: p_id)
     end
-    @inviting = @event.users.where(accepted: false)
+    inviting_id = @event.user_events.where(accepted: false).map(&:user_id)
+    @inviting_members = []
+    inviting_id.each do |i_id|
+      @inviting_members << User.find_by(id: i_id)
+    end
+    @calendars = current_user.calendars
   end
 
   def update
-    @event = Event.find(params[:id])
-    if @event.update_attributes(event_params)
-      flash[:success] = "イベント情報を更新しました"
-      redirect_to root_path
+    event = Event.find(params[:id])
+    if current_user.id == event.organizer_id
+      if event.update_attributes(event_params)
+        flash[:success] = "イベント情報を更新しました"
+        redirect_to root_path
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      current_user.user_events.find_by(event_id: params[:event][:id]).update_attributes(accepted: true)
+      flash[:success] = "イベントを追加しました"
+      redirect_to root_path
     end
   end
 
@@ -64,6 +75,15 @@ class EventsController < ApplicationController
 
   def accept
     current_user.user_events.find_by(event_id: params[:event_id]).update_attributes(accepted: true)
+    flash[:success] = "イベントへの招待を承認しました"
+    redirect_to notifications_index_path
+  end
+
+  def absent
+    byebug
+    current_user.user_events.find_by(event_id: params[:event_id]).delete
+    flash[:warning] = "イベントを欠席しました"
+    redirect_to notifications_index_path
   end
 
   private

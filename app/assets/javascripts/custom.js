@@ -34,3 +34,11 @@ jQuery(document).ready(function() {
     };
 	});
 });
+
+// イベント参加モーダル
+
+$('.modal').on('shown.bs.modal', function() {
+  $('.participateSubmit').click(function() {
+    $('.attendance-form').submit();
+  })
+})

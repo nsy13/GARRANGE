@@ -5,37 +5,60 @@
       button.close type="button" data-dismiss="modal" aria-label="Close"
         span aria-hidden="true" &times;
     .modal-body
-      .row.form-group
-        .col-md-3
-          label.col-form-label タイトル
-        .col-md-8
-          .no-border = event.title
-      .row.form-group
-        .col-md-3
-          label.col-form-label 詳細
-        .col-md-8
-          - if event.description.empty?
-            .no-border.no-info （詳細情報はありません）
-          - else
-            .no-border = event.description
-      .row.form-group
-        .col-md-3
-          label.col-form-label 開始
-        .col-md-8
-          .no-border = l event.start_date
-      .row.form-group
-        .col-md-3
-          label.col-form-label 終了
-        .col-md-8
-          .no-border = l event.end_date
-      .row.form-group
-        .col-md-3
-          label.col-form-label 参加者
-        .col-md-8
-          .no-border
-            - participants.each do |participant|
-              = link_to "#{participant.name}, ", root_path
-    .modal-footer
-      button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
-      .btn.btn-outline-primary = link_to "編集する", edit_event_path, remote: true
+      .container-fluid
+        .row.form-group
+          .col-md-3
+            label.col-form-label タイトル
+          .col-md-8
+            .no-border = event.title
+        .row.form-group
+          .col-md-3
+            label.col-form-label 詳細
+          .col-md-8
+            - if event.description.present?
+              .no-border = event.description
+            - else
+              .no-border.no-info （詳細情報はありません）
+        .row.form-group
+          .col-md-3
+            label.col-form-label 開始
+          .col-md-8
+            .no-border = l event.start_date
+        .row.form-group
+          .col-md-3
+            label.col-form-label 終了
+          .col-md-8
+            .no-border = l event.end_date
+        .row.form-group
+          .col-md-3
+            label.col-form-label 参加者
+          .col-md-8
+            .no-border
+              - participants.each do |participant|
+                = link_to "#{participant.name}, ", root_path
+        .row.form-group
+          .col-md-3
+            label.col-form-label 招待中
+          .col-md-8
+            .no-border
+              - if inviting_members.present?
+                - inviting_members.each do |inviting|
+                  = link_to "#{inviting.name}, ", root_path
+              - else
+                .no-info （招待中の参加者はいません）
+        - if inviting_members.include?(current_user)
+          = form_with model: event , class: "attendance-form", local: true do |f|
+            = f.hidden_field :id, :value => event.id
+            .row.form-group
+              .col-md-12
+                = f.label :calendar, "参加する場合はイベントを登録するカレンダーを選択してください", class: "col-form-label"
+              .col-md-12
+                = f.collection_select :calendar_id, calendars, :id, :name, { selected: false }, class: "form-control"
+      .modal-footer
+        button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
+        - if inviting_members.include?(current_user)
+          .btn.btn-primary.participateSubmit 参加する
+          .btn.btn-danger.absentSubmit = link_to "欠席する", absent_path(event_id: event.id)
+        - else
+          .btn.btn-outline-primary.edit = link_to "編集する", edit_event_path, remote: true
 
