@@ -1,28 +1,39 @@
 - if user_signed_in?
   .row
     .col-sm-4
-      .calendars-list
-        h5 カレンダー一覧
+      .profile
+        h2 = @user.name
+      .calendars-list.my_calendars
+        h5 自分のカレンダー
         = form_with url: root_path, method: :get, class: "select-calendar-form" do |f|
-          - @calendars.each.with_index(1) do |calendar, index|
+          - @my_calendars.each.with_index(1) do |calendar, index|
             .form-group
               - if index == 1
                 = f.check_box "select-calendar", { id: "calendar-#{calendar.id}", checked: true }, calendar.name
               - else
                 = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
               = f.label "calendar-#{calendar.id}", "#{calendar.name}"
+              - unless @user == current_user
+                = link_to "共有", calendar_access_path(calendar_id: calendar.id)
+      .calendars-list.others_calendars
+        h5 共有中のカレンダー
+        = form_with url: root_path, method: :get, class: "select-calendar-form" do |f|
+          - @others_calendars.each.with_index(1) do |calendar, index|
+            .form-group
+              = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
+              = f.label "calendar-#{calendar.id}", "#{calendar.name}"
       .events-index
-        h5 イベント一覧
-        p カレンダーを選択してください
-        / render @events のようにrails wayに乗る
-        - @events.each.with_index(1) do |events, index|
-          - unless events.blank?
-            div class="calendar-#{index} event-list"
-              = events.first.calendars.first.name
-              .event-title
-                - events.each do |event|
-                  .form-group
-                    = link_to event.title, event_path(event.id)
+        / h5 イベント一覧
+        / p カレンダーを選択してください
+        / / render @events のようにrails wayに乗る
+        / - @events.each.with_index(1) do |events, index|
+        /   - unless events.blank?
+        /     div class="calendar-#{index} event-list"
+        /       = events.first.calendars.first.name
+        /       .event-title
+        /         - events.each do |event|
+        /           .form-group
+        /             = link_to event.title, event_path(event.id)
       .user-search-form
         .form-group
           h5 ユーザーを探す

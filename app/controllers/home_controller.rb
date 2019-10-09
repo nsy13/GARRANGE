@@ -2,20 +2,22 @@ class HomeController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    #TODO: 共有したカレンダーの表示機能も実装
-    @calendars = current_user.calendars
+    @user = User.find_by(id: params[:user_id]) || current_user
+    user_calendars = @user.user_calendars
+    @my_calendars = user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
+    @others_calendars = user_calendars.select { |oc| oc.owner == false }.map { |others| others.calendar }
     if params[:selected_calendars]
       selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
       if selected_calendars_id.include?(0)
-        @events = []
+        events = []
       else
         calendars = selected_calendars_id.map { |id| Calendar.find(id) }
-        @events = calendars.map { |calendar| calendar.events }
+        events = calendars.map { |calendar| calendar.events }
       end
-      @display_events = @events.flatten
+      @display_events = events.flatten
     else
-      @events = current_user.calendars.order(id: "ASC").map { |calendar| calendar.events }
-      @display_events = @events.first
+      # @events = @user.calendars.order(id: "ASC").map { |calendar| calendar.events }
+      @display_events = @my_calendars.first.events
     end
   end
 end

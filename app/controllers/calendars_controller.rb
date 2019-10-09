@@ -45,7 +45,7 @@ class CalendarsController < ApplicationController
   end
 
   def access_calender
-    UserCalender.create(user_id: current_user.id, calendar_id: params[:calendar][:id])
+    UserCalendar.create(user_id: current_user.id, calendar_id: params[:calendar_id])
     redirect_to root_path
   end
 
