@@ -31,6 +31,20 @@
             .no-border = l event.end_date
         .row.form-group
           .col-md-3
+            label.col-form-label 場所
+          .col-md-8
+            - if event.place.present?
+              .no-border = event.description
+            - else
+              .no-border.no-info （開催場所は未定です）
+        .row.form-group
+          .col-md-3
+            label.col-form-label 主催者
+          .col-md-8
+            .no-border
+              = link_to "#{organizer.name}, ", root_path
+        .row.form-group
+          .col-md-3
             label.col-form-label 参加者
           .col-md-8
             .no-border
@@ -59,6 +73,6 @@
         - if inviting_members.include?(current_user)
           .btn.btn-primary.participateSubmit 参加する
           .btn.btn-danger.absentSubmit = link_to "欠席する", absent_path(event_id: event.id)
-        - else
+        - elsif organizer == current_user
           .btn.btn-outline-primary.edit = link_to "編集する", edit_event_path, remote: true
 

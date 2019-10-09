@@ -17,7 +17,7 @@
         / render @events のようにrails wayに乗る
         - @events.each.with_index(1) do |events, index|
           div class="calendar-#{index} event-list"
-            = events.first.calendar.name
+            = events.first.calendars.first.name
             .event-title
               - events.each do |event|
                 .form-group
