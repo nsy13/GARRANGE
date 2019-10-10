@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :calendar do
-    sequence(:name) { |n| "Calendar No.#{n}" }
-    sequence(:color) { "#fff" }
+    name { Faker::Beer.name }
+    color { Faker::Color.hex_color }
   end
 end

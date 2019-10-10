@@ -1,10 +1,9 @@
 FactoryBot.define do
   factory :event do
-    sequence(:title) { |n| "Event No.#{n}" }
-    sequence(:description) { |n| "Test No.#{n}Test No.#{n}Test No.#{n}" }
-    sequence(:start_date) { |n| Time.current + n*100 }
-    sequence(:end_date) { |n| Time.current + n*200 }
-    sequence(:organizer_id) { 1 }
-    sequence(:place) { |n| "Meeting Room #{n}" }
+    title { Faker::Job.title }
+    description { Faker::Lorem.sentence }
+    start_date { Faker::Date.between(from: 2.days.ago, to: 5.days.from_now) }
+    end_date { Faker::Date.between(from: 2.days.ago, to: 5.days.from_now) }
+    place { Faker::Restaurant.name }
   end
 end

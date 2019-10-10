@@ -7,6 +7,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
+gem 'faker'
 gem 'fullcalendar-rails'
 gem 'google-api-client', require: 'google/apis/calendar_v3'
 gem 'html2slim'
@@ -27,6 +28,7 @@ gem 'uglifier', '>= 1.3.0'
 group :development, :test do
   gem 'byebug', platforms: %i(mri mingw x64_mingw)
   gem "factory_bot_rails"
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
 end
 
