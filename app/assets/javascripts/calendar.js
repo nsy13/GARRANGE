@@ -24,7 +24,7 @@ function full_calendar(url = '/home/index.json') {
     eventClick: function(event, jsEvent, view) {
       $.ajax({
         type: 'GET',
-        url: 'events/' + event.id + '.js',
+        url: '/events/' + event.id + '.js',
       });
     }
   });
