@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :authenticate_user!, only: [:index]
+  before_action :authenticate_user!, only: [:index, :settings]
 
   def index
     @user = User.find_by(id: params[:user_id]) || current_user
@@ -19,5 +19,12 @@ class HomeController < ApplicationController
       # @events = @user.calendars.order(id: "ASC").map { |calendar| calendar.events }
       @display_events = @my_calendars.first.events
     end
+  end
+
+  def settings
+    @new_calendar = Calendar.new
+    user_calendars = current_user.user_calendars
+    @my_calendars = user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
+    @calendar = @my_calendars.first
   end
 end

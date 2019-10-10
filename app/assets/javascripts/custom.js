@@ -42,3 +42,25 @@ $('.modal').on('shown.bs.modal', function() {
     $('.attendance-form').submit();
   })
 })
+
+// カレンダー編集画面
+
+$(document).ready(function() {
+  $('#calendar_id').change(function() {
+    var calendar_id = $('#calendar_id').val();
+    $.ajax( {
+      type: 'GET',
+      url: '/calendars/' + calendar_id + '/edit',
+    });
+  });
+});
+
+$(document).ajaxComplete(function() {
+  $('#calendar_id').change(function() {
+    var calendar_id = $('#calendar_id').val();
+    $.ajax( {
+      type: 'GET',
+      url: '/calendars/' + calendar_id + '/edit',
+    });
+  });
+});

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'notifications/index'
   root to: 'home#index'
   get '/home/index', to: 'home#index'
+  get '/settings', to: 'home#settings'
   post '/accept', to: 'events#accept'
   get '/absent', to: 'events#absent'
   get '/calendar/access', to: 'calendars#access_calender'

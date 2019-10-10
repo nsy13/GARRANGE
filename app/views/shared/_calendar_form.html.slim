@@ -1,10 +1,8 @@
 .modal-dialog.modal-lg
   .modal-content
-    = form_with model: @calendar, local:true do |f|
+    = form_with model: calendar, local:true do |f|
       .modal-header
         h5.modal-title カレンダーを作成する
-        button.close type="button" data-dismiss="modal" aria-label="Close"
-          span aria-hidden="true" &times;
       .modal-body
         .row.form-group
           .col-md-8.offset-md-2
@@ -17,5 +15,4 @@
           .col-md-2
             = f.color_field :color, class: "form-control"
       .modal-footer
-        button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
         = f.submit class: "btn btn-primary"

@@ -26,6 +26,8 @@ class CalendarsController < ApplicationController
 
   def edit
     @calendar = Calendar.find(params[:id])
+    user_calendars = current_user.user_calendars
+    @my_calendars = user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
   end
 
   def update
