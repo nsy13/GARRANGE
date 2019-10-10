@@ -73,6 +73,6 @@
         - if inviting_members.include?(current_user)
           .btn.btn-primary.participateSubmit 参加する
           .btn.btn-danger.absentSubmit = link_to "欠席する", absent_path(event_id: event.id)
-        - elsif organizer == current_user
+        - elsif current_user?(organizer)
           .btn.btn-outline-primary.edit = link_to "編集する", edit_event_path, remote: true
 

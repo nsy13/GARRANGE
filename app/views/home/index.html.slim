@@ -4,7 +4,7 @@
       .profile
         h2 = @user.name
       .calendars-list.my_calendars
-        - if @user == current_user
+        - if current_user?(@user)
           h5 自分のカレンダー
         - else
           h5 #{@user.name}さんのカレンダー
@@ -16,7 +16,7 @@
               - else
                 = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
               = f.label "calendar-#{calendar.id}", "#{calendar.name}"
-              - unless @user == current_user
+              - unless current_user?(@user)
                 = link_to "共有", calendar_access_path(calendar_id: calendar.id)
       .calendars-list.others_calendars
         h5 共有中のカレンダー
