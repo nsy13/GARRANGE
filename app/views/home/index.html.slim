@@ -4,7 +4,10 @@
       .profile
         h2 = @user.name
       .calendars-list.my_calendars
-        h5 自分のカレンダー
+        - if @user == current_user
+          h5 自分のカレンダー
+        - else
+          h5 #{@user.name}さんのカレンダー
         = form_with url: root_path, method: :get, class: "select-calendar-form" do |f|
           - @my_calendars.each.with_index(1) do |calendar, index|
             .form-group
