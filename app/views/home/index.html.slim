@@ -1,4 +1,57 @@
-h1
-  | Home#index
-p
-  | Find me in app/views/home/index.html.erb
+- if user_signed_in?
+  .row
+    .col-sm-4
+      .profile
+        h2 = @user.name
+      .calendars-list.my_calendars
+        - if current_user?(@user)
+          h5 自分のカレンダー
+        - else
+          h5 #{@user.name}さんのカレンダー
+        = form_with url: root_path, method: :get, class: "select-calendar-form" do |f|
+          - @my_calendars.each.with_index(1) do |calendar, index|
+            .form-group
+              - if index == 1
+                = f.check_box "select-calendar", { id: "calendar-#{calendar.id}", checked: true }, calendar.name
+              - else
+                = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
+              = f.label "calendar-#{calendar.id}", "#{calendar.name}"
+              - unless current_user?(@user)
+                = link_to "共有", calendar_access_path(calendar_id: calendar.id)
+      .calendars-list.others_calendars
+        h5 共有中のカレンダー
+        = form_with url: root_path, method: :get, class: "select-calendar-form" do |f|
+          - @others_calendars.each.with_index(1) do |calendar, index|
+            .form-group
+              = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
+              = f.label "calendar-#{calendar.id}", "#{calendar.name}"
+      .events-index
+        / h5 イベント一覧
+        / p カレンダーを選択してください
+        / / render @events のようにrails wayに乗る
+        / - @events.each.with_index(1) do |events, index|
+        /   - unless events.blank?
+        /     div class="calendar-#{index} event-list"
+        /       = events.first.calendars.first.name
+        /       .event-title
+        /         - events.each do |event|
+        /           .form-group
+        /             = link_to event.title, event_path(event.id)
+      .user-search-form
+        .form-group
+          h5 ユーザーを探す
+          form.form-inline
+            input.form-control type="search" placeholder="メールアドレスで検索" aria-label="Search"
+              button.btn.btn-outline-success type="submit" 検索
+      .event-form-link
+        = form_with url: new_event_path, class: "event-form", method: :get do |f|
+          = f.submit "イベントを作成する", class: "btn btn-primary"
+    .col-sm-8.fullcalendar
+      = render 'shared/fullcalendar'
+
+  / event create modal
+  #event-form.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
+  / event detail modal
+  #event-detail.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
+  / event edit modal
+  #event-edit.modal.fade tabindex="-1" role="dialog" aria-hidden="true"

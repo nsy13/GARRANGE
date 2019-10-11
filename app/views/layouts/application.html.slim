@@ -5,8 +5,7 @@ html
       | GARRANGE
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag    'application', media: 'all'
   body
     header
       nav
@@ -17,15 +16,18 @@ html
           | .
           = link_to "編集", edit_user_registration_path
           |  |
-          = link_to "ログアウト", destroy_user_session_path, method: :delete
+          = link_to "ログアウト", logout_path, method: :delete
         - else
-          = link_to "サインイン", new_user_registration_path
+          = link_to "サインイン", signup_path
           |  |
-          = link_to "ログイン", new_user_session_path
+          = link_to "ログイン", login_path
           = link_to "Facebookログイン", user_facebook_omniauth_authorize_path
           = link_to "Googleログイン", user_google_oauth2_omniauth_authorize_path
-    p.notice
-      = notice
-    p.alert
-      = alert
-    = yield
+    div.container
+      p.notice
+        = notice
+      p.alert
+        = alert
+      = render "shared/flash_message"
+      = yield
+    = javascript_include_tag 'application'

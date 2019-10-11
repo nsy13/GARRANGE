@@ -1,0 +1,6 @@
+- if object.errors.any?
+  div#error_explanation
+    div.alert.alert-danger
+      ul
+        - object.errors.full_messages.each do | msg |
+          li = msg

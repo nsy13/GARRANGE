@@ -1,0 +1,64 @@
+.modal-dialog.modal-lg
+  .modal-content
+    = form_with model: event, local:true do |f|
+      = f.hidden_field :organizer_id, value: current_user.id
+      .modal-header
+        h5.modal-title イベントを作成する
+        button.close type="button" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body
+        .row.form-group
+          .col-md-3
+            = f.label :calendar, "対象カレンダー", class: "col-form-label"
+          .col-md-9
+            = f.collection_select :calendar_id, @calendars, :id, :name, { selected: @calendar.id }, class: "form-control"
+        .row.form-group
+          .col-md-3
+            = f.label :title, "タイトル", class: "col-form-label"
+          .col-md-9
+            = f.text_field :title, class: "form-control", placeholder: "必須項目", required: true
+        .row.form-group
+          .col-md-3
+            = f.label :description, "詳細", class: "col-form-label"
+          .col-md-9
+            = f.text_area :description, class: "form-control"
+        .row.form-group
+          .col-md-3
+            = f.label :place, "場所", class: "col-form-label"
+          .col-md-9
+            = f.text_field :place, class: "form-control"
+        .row.form-group
+          .col-md-3
+            = f.label :participants, "参加者", class: "col-form-label"
+          .col-md-9
+            = f.text_field :participants, class: "form-control"
+        / .row.form-group
+        /   .col-md-3
+        /     = f.label :request_member, "希望メンバー", class: "col-form-label"
+        /   .col-md-9
+        /     = f.text_field :request_member, class: "form-control"
+        .row.form-group
+          .col-md-3
+            = f.label :start_date, "開始", class: "col-form-label"
+          .col-md-9
+            = f.datetime_select :start_date,
+                                { user_month_numbers: true,
+                                  minute_step: 30,
+                                  start_year: Time.current.year,
+                                  end_year: Time.current.year + 5,
+                                  id: "inlineFormCustomSelect" },
+                                { class: "custom-select datetime-select" }
+        .row.form-group
+          .col-md-3
+            = f.label :end_date, "終了", class: "col-form-label"
+          .col-md-9
+            = f.datetime_select :end_date,
+                                { user_month_numbers: true,
+                                  minute_step: 30,
+                                  start_year: Time.current.year,
+                                  end_year: Time.current.year + 5,
+                                  id: "inlineFormCustomSelect" },
+                                { class: "custom-select datetime-select" }
+      .modal-footer
+        button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
+        = f.submit class: "btn btn-primary"
