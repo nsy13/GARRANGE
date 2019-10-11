@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # get '/events/:calendar_id', to: 'gcals#events', as: 'events', calendar_id: /[^\/]+/
   # post '/events/:calendar_id', to: 'gcals#new_event', as: 'new_event', calendar_id: /[^\/]+/
   resources :events
-  resources :calendars
+  resources :calendars, only: [:new, :create, :edit, :update, :destroy]
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
     get 'signup', to: 'devise/registrations#new'

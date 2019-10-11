@@ -1,10 +1,6 @@
 class CalendarsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
 
-  def index
-    @calendar = Calendar.all
-  end
-
   def new
     @calendar = Calendar.new
   end
@@ -18,10 +14,6 @@ class CalendarsController < ApplicationController
     else
       render 'new'
     end
-  end
-
-  def show
-    @calendar = Calendar.find(params[:id])
   end
 
   def edit
