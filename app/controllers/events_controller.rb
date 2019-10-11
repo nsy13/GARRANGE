@@ -37,7 +37,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    #FIXME: participantsが存在しない場合にバグ
+    # FIXME: participantsが存在しない場合にバグ
     @event = Event.find(params[:id])
     @organizer = User.find_by(id: @event.organizer_id)
     @participants = []

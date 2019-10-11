@@ -12,10 +12,11 @@ RSpec.describe HomeController, type: :controller do
   describe "#index when user not logged in" do
     let(:user1) { create(:user, id: 1) }
     let(:user2) { create(:user, id: 2) }
-    let(:calendars) { create_list(:calendar, 3)}
+    let(:calendars) { create_list(:calendar, 3) }
     let(:event1) { create(:event, organizer_id: 1) }
     let(:event2) { create(:event, organizer_id: 1) }
     let(:event3) { create(:event, organizer_id: 2) }
+
     login_user
 
     before do
@@ -37,7 +38,8 @@ RSpec.describe HomeController, type: :controller do
       before do
         get :index
       end
-      it "should have a current_user" do
+
+      it "have a current_user" do
         expect(subject.current_user).to eq user1
       end
       it "returns http success" do
@@ -64,7 +66,8 @@ RSpec.describe HomeController, type: :controller do
       before do
         get :index, params: { user_id: 2 }
       end
-      it "should have a current_user" do
+
+      it "have a current_user" do
         expect(subject.current_user).to eq user1
       end
       it "returns http success" do
@@ -91,9 +94,10 @@ RSpec.describe HomeController, type: :controller do
       before do
         get :settings
       end
+
       it "returns http success" do
         expect(response).to have_http_status(:success)
-      end        
+      end
       it "assigns @my_calendars" do
         expect(assigns(:my_calendars)).to eq calendars[0..1]
       end

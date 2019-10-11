@@ -67,7 +67,7 @@ class GcalsController < ApplicationController
       authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
-      redirect_uri: gcal_callback_url
+      redirect_uri: gcal_callback_url,
     }
   end
 end

@@ -6,6 +6,7 @@ RSpec.describe EventsController, type: :controller do
   let(:user3) { create(:user, id: 3) }
   let(:calendar) { create(:calendar) }
   let(:event) { create(:event, id: 1, organizer_id: 1) }
+
   login_user
 
   before do
