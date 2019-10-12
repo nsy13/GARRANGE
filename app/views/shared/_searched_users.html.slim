@@ -1,0 +1,6 @@
+- if searched_users.present?
+  - searched_users.each do |user|
+    = link_to user.name, root_path(user_id: user.id), id: "searched-user-#{user.id}", class: "form-control no-border"
+- elsif searched_users.nil?
+- else
+  | 条件に合うユーザーは見つかりませんでした

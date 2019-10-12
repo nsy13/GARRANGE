@@ -19,12 +19,7 @@ class HomeController < ApplicationController
       @display_events = @my_calendars.first.events
     end
     @q = User.ransack(params[:q])
-    if params[:q]
-      @searched_users = @q.result(distinct: true)
-      render json: @searched_users.select("id").map { |e| e.id  }.to_json
-    else
-      @searched_users = nil
-    end
+    @searched_users = nil
   end
 
   def settings
@@ -32,5 +27,16 @@ class HomeController < ApplicationController
     user_calendars = current_user.user_calendars
     @my_calendars = user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
     @calendar = @my_calendars.first
+  end
+
+  def search_user
+    @q = User.ransack(params[:q])
+    if params[:q][:name_or_email_cont].blank?
+      @searched_users = nil
+    elsif params[:q][:name_or_email_cont]
+      @searched_users = @q.result(distinct: true)
+    else
+      @searched_users = []
+    end
   end
 end
