@@ -25,24 +25,16 @@
             .form-group
               = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
               = f.label "calendar-#{calendar.id}", "#{calendar.name}"
-      .events-index
-        / h5 イベント一覧
-        / p カレンダーを選択してください
-        / / render @events のようにrails wayに乗る
-        / - @events.each.with_index(1) do |events, index|
-        /   - unless events.blank?
-        /     div class="calendar-#{index} event-list"
-        /       = events.first.calendars.first.name
-        /       .event-title
-        /         - events.each do |event|
-        /           .form-group
-        /             = link_to event.title, event_path(event.id)
-      .user-search-form
-        .form-group
-          h5 ユーザーを探す
-          form.form-inline
-            input.form-control type="search" placeholder="メールアドレスで検索" aria-label="Search"
-              button.btn.btn-outline-success type="submit" 検索
+      .user-search-form.form-group
+        h5 ユーザーを探す
+        = search_form_for @q, url: root_path, remote: true do |f|
+          = f.label :name_or_email_cont
+          = f.search_field :name_or_email_cont, class: "form-control", type: "search", placeholder: "名前、またはメールアドレスで検索"
+          / = f.submit "検索", class: "btn btn-outline-success"
+        .searched-user
+          - if @searched_users
+            - @searched_users.each do |user|
+              = link_to user.name, root_path(user_id: user.id), id: "searched-user-#{user.id}", class: "form-control no-border"
       .event-form-link
         = form_with url: new_event_path, class: "event-form", method: :get do |f|
           = f.submit "イベントを作成する", class: "btn btn-primary"

@@ -16,8 +16,14 @@ class HomeController < ApplicationController
       end
       @display_events = events.flatten
     else
-      # @events = @user.calendars.order(id: "ASC").map { |calendar| calendar.events }
       @display_events = @my_calendars.first.events
+    end
+    @q = User.ransack(params[:q])
+    if params[:q]
+      @searched_users = @q.result(distinct: true)
+      render json: @searched_users.select("id").map { |e| e.id  }.to_json
+    else
+      @searched_users = nil
     end
   end
 
