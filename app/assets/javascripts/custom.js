@@ -64,3 +64,30 @@ $(document).ajaxComplete(function() {
     });
   });
 });
+
+// イベント作成フォームの参加者検索
+
+$('.modal').on('shown.bs.modal', function() {
+  $('.searched-users').children().hide();
+  $('input[name="user_name_or_email"]').keyup(function() {
+    $('.searched-users').children().hide();
+    $('input[name="search_user"]:checked').parent().show();
+    var user_info = $('input[name="user_name_or_email"]').val();
+    $("[class*='" + user_info + "']").show();
+  });
+  $('input[name="search_user"]').change(function(){
+    $('input[name="inviting_users"]').remove();
+    var inviting_users = [];
+    $('input[name="search_user"]:checked').each(function() {
+      inviting_users.push($(this).val());
+    });
+    $('<input>').attr({
+      'type': 'hidden',
+      'name': 'inviting_users',
+      'value': inviting_users
+    }).appendTo($('#event-modal-form'));
+  });
+  $('.event-form-submit').click(function() {
+    $('#event-modal-form').submit();
+  });
+});

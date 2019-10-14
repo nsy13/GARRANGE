@@ -4,6 +4,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @calendars = current_user.calendars
+    @all_users = User.all
     if params[:selected_calendars]
       selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
       @calendar = Calendar.find_by(id: selected_calendars_id[0])
@@ -18,9 +19,9 @@ class EventsController < ApplicationController
     if @event.save
       @event.user_events.create(user_id: current_user.id, accepted: true)
       @event.calendar_events.create(calendar_id: @calendar.id)
-      params[:event][:participants].split(", ").each do |p|
-        participant = User.find_by(name: p)
-        UserEvent.create(user_id: participant.id, event_id: @event.id)
+      params[:inviting_users].split(", ").each do |id|
+        invited = User.find_by(id: id)
+        UserEvent.create(user_id: invited.id, event_id: @event.id)
       end
       flash[:success] = "イベントを追加しました"
       redirect_to root_path
