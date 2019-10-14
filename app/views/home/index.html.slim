@@ -32,7 +32,6 @@
           = f.search_field :name_or_email_cont, class: "form-control", type: "search", placeholder: "名前、またはメールアドレスで検索", autocomplete: "off"
           = f.submit "検索", class: "btn btn-outline-success"
         .searched-users
-          / - unless @searched_users.nil?
           = render "shared/searched_users", { searched_users: @searched_users }
       .event-form-link
         = form_with url: new_event_path, class: "event-form", method: :get do |f|
@@ -46,3 +45,6 @@
   #event-detail.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
   / event edit modal
   #event-edit.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
+- else
+  = link_to "新規登録", new_user_registration_path
+  = link_to "ログイン", login_path
