@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/absent', to: 'events#absent'
   get '/calendar/access', to: 'calendars#access_calender'
   get '/users/:user_id', to: 'home#index'
+  get 'search', to: 'home#search_user'
   # get 'gcals/get_google_calendar_event', to: 'gcals#get_google_calendar_event'
   # get '/gcal/redirect', to: 'gcals#redirect'
   # get '/gcal/callback', to: 'gcals#callback'

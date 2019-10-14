@@ -1,12 +1,12 @@
 .modal-dialog.modal-lg
   .modal-content
-    = form_with model: event, local:true do |f|
-      = f.hidden_field :organizer_id, value: current_user.id
-      .modal-header
-        h5.modal-title イベントを作成する
-        button.close type="button" data-dismiss="modal" aria-label="Close"
-          span aria-hidden="true" &times;
-      .modal-body
+    .modal-header
+      h5.modal-title イベントを作成する
+      button.close type="button" data-dismiss="modal" aria-label="Close"
+        span aria-hidden="true" &times;
+    .modal-body
+      = form_with model: event, id: "event-modal-form", local:true do |f|
+        = f.hidden_field :organizer_id, value: current_user.id
         .row.form-group
           .col-md-3
             = f.label :calendar, "対象カレンダー", class: "col-form-label"
@@ -29,16 +29,6 @@
             = f.text_field :place, class: "form-control"
         .row.form-group
           .col-md-3
-            = f.label :participants, "参加者", class: "col-form-label"
-          .col-md-9
-            = f.text_field :participants, class: "form-control"
-        / .row.form-group
-        /   .col-md-3
-        /     = f.label :request_member, "希望メンバー", class: "col-form-label"
-        /   .col-md-9
-        /     = f.text_field :request_member, class: "form-control"
-        .row.form-group
-          .col-md-3
             = f.label :start_date, "開始", class: "col-form-label"
           .col-md-9
             = f.datetime_select :start_date,
@@ -59,6 +49,18 @@
                                   end_year: Time.current.year + 5,
                                   id: "inlineFormCustomSelect" },
                                 { class: "custom-select datetime-select" }
-      .modal-footer
-        button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
-        = f.submit class: "btn btn-primary"
+    .modal-header
+      h5.modal-title 参加者を招待する(任意)
+    .modal-body
+      .row.form-group
+        .col-md-12
+          = text_field_tag "user_name_or_email", "", placeholder: "名前またはメールアドレスで検索", class: "form-control", autocomplete: "off"
+        .col-md-9.searched-users
+          - unless @all_users.blank?
+            - @all_users.each do |user|
+              div class="searched-user #{user.name} #{user.email} "
+                = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
+                = label_tag "search-user-#{user.id}", user.name
+    .modal-footer
+      button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
+      button.btn.btn-primary.event-form-submit type="button" 作成する
