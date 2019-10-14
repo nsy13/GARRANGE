@@ -11,7 +11,7 @@
           .col-md-3
             = f.label :calendar, "対象カレンダー", class: "col-form-label"
           .col-md-9
-            = f.collection_select :calendar_id, @calendars, :id, :name, { selected: @calendar.id }, class: "form-control"
+            = f.collection_select :calendar_id, @my_calendars, :id, :name, { selected: @calendar.id }, class: "form-control"
         .row.form-group
           .col-md-3
             = f.label :title, "タイトル", class: "col-form-label"

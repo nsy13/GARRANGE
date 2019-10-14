@@ -3,13 +3,13 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @calendars = current_user.calendars
+    @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
     @all_users = User.all
     if params[:selected_calendars]
       selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
       @calendar = Calendar.find_by(id: selected_calendars_id[0])
     else
-      @calendar = @calendars.first
+      @calendar = @my_calendars.first
     end
   end
 
