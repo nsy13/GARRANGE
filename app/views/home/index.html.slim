@@ -1,53 +1,55 @@
 - if user_signed_in?
   .row
     .col-sm-4
-      .profile
-        h2 = @user.name
-      .calendars-list.my_calendars
-        - if current_user?(@user)
-          h5 自分のカレンダー
-        - else
-          h5 #{@user.name}さんのカレンダー
-        = form_with url: root_path, method: :get, class: "select-calendar-form" do |f|
-          - @my_calendars.each.with_index(1) do |calendar, index|
-            .form-group
-              - if index == 1
-                = f.check_box "select-calendar", { id: "calendar-#{calendar.id}", checked: true }, calendar.name
-              - else
-                = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
-              = f.label "calendar-#{calendar.id}", "#{calendar.name}"
-              - unless current_user?(@user)
-                = link_to "共有", calendar_access_path(calendar_id: calendar.id)
-      .calendars-list.others_calendars
-        h5 共有中のカレンダー
-        = form_with url: root_path, method: :get, class: "select-calendar-form" do |f|
-          - @others_calendars.each.with_index(1) do |calendar, index|
-            .form-group
-              = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
-              = f.label "calendar-#{calendar.id}", "#{calendar.name}"
-      .user-search-form.form-group
-        h5 ユーザーを探す
-        = search_form_for @q, url: search_path, remote: true do |f|
-          = f.label :name_or_email_cont
-          = f.search_field :name_or_email_cont, class: "form-control", type: "search", placeholder: "名前、またはメールアドレスで検索", autocomplete: "off"
-          = f.submit "検索", class: "btn btn-outline-success"
-        .searched-users
-          = render "shared/searched_users", { searched_users: @searched_users }
-      .event-form-link
-        = form_with url: new_event_path, class: "event-form", method: :get do |f|
+      .sidebar
+        .sidebar__profile
+          h2 = @user.name
+        .sidebar__calendarsList
+          .sidebar__calendarsList--myCalendars
+            - if current_user?(@user)
+              h5 自分のカレンダー
+            - else
+              h5 #{@user.name}さんのカレンダー
+            = form_with url: root_path, method: :get, class: "sidebar__calendarsList--form" do |f|
+              - @my_calendars.each.with_index(1) do |calendar, index|
+                .form-group
+                  - if index == 1
+                    = f.check_box "select-calendar", { id: "calendar-#{calendar.id}", checked: true }, calendar.name
+                  - else
+                    = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
+                  = f.label "calendar-#{calendar.id}", "#{calendar.name}"
+                  - unless current_user?(@user)
+                    = link_to "共有", calendar_access_path(calendar_id: calendar.id)
+          .sidebar__calendarsList--othersCalendars
+            h5 共有中のカレンダー
+            = form_with url: root_path, method: :get, class: "sidebar__calendarsList--form" do |f|
+              - @others_calendars.each.with_index(1) do |calendar, index|
+                .form-group
+                  = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
+                  = f.label "calendar-#{calendar.id}", "#{calendar.name}"
+        .sidebar__searchUsers.form-group
+          h5 ユーザーを探す
+          = search_form_for @q, url: search_path, remote: true do |f|
+            = f.label :name_or_email_cont
+            = f.search_field :name_or_email_cont, class: "form-control", type: "search", placeholder: "名前、またはメールアドレスで検索", autocomplete: "off"
+            = f.submit "検索", class: "btn btn-outline-success"
+          .sidebar__searchUsers--list
+            = render "shared/searched_users", { searched_users: @searched_users }
+      .sidebar__newEvent
+        = form_with url: new_event_path, class: "sidebar__newEvent--form", method: :get do |f|
           = f.submit "イベントを作成する", class: "btn btn-primary"
-      .date-seach-link
-        = form_with url: date_search_path, class: "date-search-form", method: :get do |f|
+      .sidebar__searchDate
+        = form_with url: date_search_path, method: :get do |f|
           = f.submit "空き時間を検索する", class: "btn btn-outline-primary"
-    .col-sm-8.fullcalendar
-      = render 'shared/fullcalendar'
-
-  / event create modal
-  #event-form.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
-  / event detail modal
-  #event-detail.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
-  / event edit modal
-  #event-edit.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
+    .col-sm-8
+      .calendar
+        .calendar__body.fullcalendar
+          = render 'shared/fullcalendar'
+    .modalSection
+      .modalSection__eventEdit.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
+      .modalSection__eventDetail.modal.fade tabindex="-2" role="dialog" aria-hidden="true"
+      .modalSection__eventForm.modal.fade tabindex="-3" role="dialog" aria-hidden="true"
+      .modalSection__searchDate.modal.fade tabindex="-4" role="dialog" aria-hidden="true"
 - else
   = link_to "新規登録", new_user_registration_path
   = link_to "ログイン", login_path

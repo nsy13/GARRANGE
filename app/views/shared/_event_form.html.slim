@@ -5,7 +5,7 @@
       button.close type="button" data-dismiss="modal" aria-label="Close"
         span aria-hidden="true" &times;
     .modal-body
-      = form_with model: event, id: "event-modal-form", local:true do |f|
+      = form_with model: event, class: "modal__newEvent--form", local:true do |f|
         = f.hidden_field :organizer_id, value: current_user.id
         .row.form-group
           .col-md-3
@@ -49,6 +49,9 @@
                                   end_year: Time.current.year + 5,
                                   id: "inlineFormCustomSelect" },
                                 { class: "custom-select datetime-select" }
+        .row.form-group
+          .col-md-12.displayNone
+            = f.submit class: "modal__newEvent--submitDisplayNone"
     .modal-header
       h5.modal-title 参加者を招待する(任意)
     .modal-body
@@ -63,4 +66,4 @@
                 = label_tag "search-user-#{user.id}", user.name
     .modal-footer
       button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
-      button.btn.btn-primary.event-form-submit type="button" 作成する
+      button.btn.btn-primary.modal__newEvent--submit type="button" 作成する

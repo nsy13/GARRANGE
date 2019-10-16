@@ -1,2 +1,2 @@
-| $("#event-detail").html("#{escape_javascript(render 'shared/event_detail', { event: @event, participants: @participants, inviting_members: @inviting_members, calendars: @calendars, organizer: @organizer }) }");
-| $("#event-detail").modal("show")
+| $(".modalSection__eventDetail").html("#{escape_javascript(render 'shared/event_detail', { event: @event, participants: @participants, inviting_members: @inviting_members, calendars: @calendars, organizer: @organizer }) }");
+| $(".modalSection__eventDetail").modal("show")

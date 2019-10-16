@@ -5,11 +5,8 @@
       button.close type="button" data-dismiss="modal" aria-label="Close"
         span aria-hidden="true" &times;
     .modal-body
-      = form_with url: date_search_path, id: "event-modal-form", remote: true, method: :get do |f|
-        / = f.hidden_field :organizer_id, value: current_user.id
+      = form_with url: date_search_path, class: "modal__searchDate--form", method: :get do |f|
         .row.form-group
-          / .col-md-3
-          /   = f.label :start_date, "いつから", class: "col-form-label"
           .col-md-10
             = f.datetime_select :preferred_period_start,
                                 { user_month_numbers: true,
@@ -19,9 +16,6 @@
                                   id: "inlineFormCustomSelect" },
                                 { class: "custom-select datetime-select" }
             | から
-            / .row.form-group
-              / .col-md-3end_date, "いつまでに", class: "col-form-label"
-              / .col-md-10
             = f.datetime_select :preferred_period_end,
                                 { user_month_numbers: true,
                                   minute_step: 30,
@@ -56,10 +50,8 @@
             .select-date
               = f.radio_button :select_date, "#{ date.first }"
               = f.label :select_date, "#{l date.first} 〜 #{l date.last}"
-
     .modal-footer
       button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
-      button.btn.btn-outline-primary.date-search-submit type="button" 空き時間を検索する
+      button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を検索する
       - if @candidate_dates.present?
-        button.btn.btn-primary type="button" この日程でイベントを作成する
-  / #event-form.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
+        button.btn.btn-primary.modal__newEvent--link type="button" この日程でイベントを作成する
