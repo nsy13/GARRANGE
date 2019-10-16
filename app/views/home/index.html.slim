@@ -36,6 +36,9 @@
       .event-form-link
         = form_with url: new_event_path, class: "event-form", method: :get do |f|
           = f.submit "イベントを作成する", class: "btn btn-primary"
+      .date-seach-link
+        = form_with url: date_search_path, class: "date-search-form", method: :get do |f|
+          = f.submit "空き時間を検索する", class: "btn btn-outline-primary"
     .col-sm-8.fullcalendar
       = render 'shared/fullcalendar'
 

@@ -50,7 +50,7 @@ $(document).ajaxComplete(function() {
 
 // イベント作成フォームの参加者検索
 
-$('.modal').on('shown.bs.modal', function() {
+$('.modal').on('shown.bs.modal ajaxComplete', function() {
   $('.searched-users').children().hide();
   $('input[name="user_name_or_email"]').keyup(function() {
     $('.searched-users').children().hide();
@@ -73,4 +73,44 @@ $('.modal').on('shown.bs.modal', function() {
   $('.event-form-submit').click(function() {
     $('#event-modal-form').submit();
   });
+});
+
+// 日程検索フォーム
+
+$('.modal').on('shown.bs.modal', function() {
+  $('.date-search-submit').click(function() {
+    $('span').click();
+    // Rails.fire($('#event-modal-form')[0], 'submit');
+  });
+
+  $('input[name="select_date"]').change(function() {
+    console.log('hello');
+    // $('input[name="selected-date]').remove();
+    // var selected_date = $('input[name="date_select"]:checked').val();
+    // $('<input>').attr({
+      //   'type': 'hidden',
+      //   'name': 'selected-date',
+      //   'value': selected_date
+      // }).appendTo($('#event-modal-form'));
+    });
+  });
+
+$(document).ajaxComplete(function() {
+  $('.modal').on('shown.bs.modal', function() {
+
+    $('.date-search-submit').click(function() {
+      Rails.fire($('#event-modal-form')[0], 'submit');
+    });
+
+    $('input[name="select_date"]').change(function() {
+      console.log('hello');
+      // $('input[name="selected-date]').remove();
+      // var selected_date = $('input[name="date_select"]:checked').val();
+      // $('<input>').attr({
+      //   'type': 'hidden',
+      //   'name': 'selected-date',
+      //   'value': selected_date
+      // }).appendTo($('#event-modal-form'));
+    });
+  })
 });

@@ -89,9 +89,54 @@ class EventsController < ApplicationController
     redirect_to notifications_index_path
   end
 
+  def date_search
+    @event = Event.new
+    @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
+    @all_users = User.all
+    @users = []
+    if params[:selected_calendars]
+      selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
+      @calendar = Calendar.find_by(id: selected_calendars_id[0])
+    else
+      @calendar = @my_calendars.first
+    end
+    if params[:inviting_users]
+      params[:inviting_users].split(", ").each do |id|
+        invited = User.find_by(id: id)
+        @users << invited
+      end
+      @users << current_user
+      @candidate_dates = []
+      preferred_period_start = Time.zone.local(params["preferred_period_start(1i)"].to_i, params["preferred_period_start(2i)"].to_i, params["preferred_period_start(3i)"].to_i, params["preferred_period_start(4i)"].to_i, params["preferred_period_start(5i)"].to_i)
+      preferred_period_end = Time.zone.local(params["preferred_period_end(1i)"].to_i, params["preferred_period_end(2i)"].to_i, params["preferred_period_end(3i)"].to_i, params["preferred_period_end(4i)"].to_i, params["preferred_period_end(5i)"].to_i)
+      require_duration = params[:event_time].to_i * 60
+      slot_st = preferred_period_start
+      slot = (slot_st)..(slot_st + require_duration)
+      until slot.include?(preferred_period_end)
+        if @users.all? { |user| user.events.none? { |event| include_slot?(event, slot) } }
+          @candidate_dates << slot
+        end
+        slot_st += 30.minutes
+        slot = slot_st .. slot_st + require_duration
+        break if @candidate_dates.size == 3
+      end
+    end
+  end
+
+  def include_slot?(event, slot)
+    event_time = event.start_date .. event.end_date
+    event_time.overlaps?(slot)
+  end
+
   private
 
   def event_params
     params.require(:event).permit(:title, :description, :start_date, :end_date, :organizer_id)
   end
+
+
+# preferred_period_st 10/16 12:00:00
+# slot_st = preferred_period_st
+# preferred_period 1.week
+# require_duration 2.hours
 end
