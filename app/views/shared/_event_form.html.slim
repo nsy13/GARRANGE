@@ -32,23 +32,25 @@
             = f.label :start_date, "開始", class: "col-form-label"
           .col-md-9
             = f.datetime_select :start_date,
-                                { user_month_numbers: true,
+                                { default: event.start_date,
+                                  user_month_numbers: true,
                                   minute_step: 30,
                                   start_year: Time.current.year,
                                   end_year: Time.current.year + 5,
                                   id: "inlineFormCustomSelect" },
-                                { class: "custom-select datetime-select" }
+                                { class: "custom-select datetime-select"}
         .row.form-group
           .col-md-3
             = f.label :end_date, "終了", class: "col-form-label"
           .col-md-9
             = f.datetime_select :end_date,
-                                { user_month_numbers: true,
+                                { default: event.end_date,
+                                  user_month_numbers: true,
                                   minute_step: 30,
                                   start_year: Time.current.year,
                                   end_year: Time.current.year + 5,
                                   id: "inlineFormCustomSelect" },
-                                { class: "custom-select datetime-select" }
+                                { class: "custom-select datetime-select"}
         .row.form-group
           .col-md-12.displayNone
             = f.submit class: "modal__newEvent--submitDisplayNone"
@@ -62,7 +64,10 @@
           - unless @all_users.blank?
             - @all_users.each do |user|
               div class="searched-user #{user.name} #{user.email} "
-                = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
+                - if @inviting_users.include?(user)
+                  = check_box_tag :search_user, user.id, true, { id: "search-user-#{user.id}" }
+                - else
+                  = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
                 = label_tag "search-user-#{user.id}", user.name
     .modal-footer
       button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル

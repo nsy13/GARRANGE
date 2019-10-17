@@ -3,6 +3,15 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    if params[:event_time]
+      @event.start_date = params[:select_date].to_time
+      @event.end_date = @event.start_date + params[:event_time].to_i.minutes
+      @inviting_users = []
+      params[:inviting_users].split(", ").each do |id|
+        invited = User.find_by(id: id)
+        @inviting_users << invited
+      end
+    end
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
     @all_users = User.all
     if params[:selected_calendars]
@@ -94,6 +103,7 @@ class EventsController < ApplicationController
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
     @all_users = User.all
     @users = []
+    @event_time = 0
     if params[:selected_calendars]
       selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
       @calendar = Calendar.find_by(id: selected_calendars_id[0])
@@ -109,15 +119,17 @@ class EventsController < ApplicationController
       @candidate_dates = []
       preferred_period_start = Time.zone.local(params["preferred_period_start(1i)"].to_i, params["preferred_period_start(2i)"].to_i, params["preferred_period_start(3i)"].to_i, params["preferred_period_start(4i)"].to_i, params["preferred_period_start(5i)"].to_i)
       preferred_period_end = Time.zone.local(params["preferred_period_end(1i)"].to_i, params["preferred_period_end(2i)"].to_i, params["preferred_period_end(3i)"].to_i, params["preferred_period_end(4i)"].to_i, params["preferred_period_end(5i)"].to_i)
-      require_duration = params[:event_time].to_i * 60
+      @event_time = ((params["event_time(4i)"].to_i * 60) + (params["event_time(5i)"].to_i)) * 60
       slot_st = preferred_period_start
-      slot = (slot_st)..(slot_st + require_duration)
+      slot = (slot_st)..(slot_st + @event_time)
+      slot = (slot_st)..(slot_st + @event_time)
       until slot.include?(preferred_period_end)
         if @users.all? { |user| user.events.none? { |event| include_slot?(event, slot) } }
           @candidate_dates << slot
         end
         slot_st += 30.minutes
-        slot = slot_st .. slot_st + require_duration
+        slot = slot_st .. slot_st + @event_time
+        slot = slot_st .. slot_st + @event_time
         break if @candidate_dates.size == 3
       end
     end
@@ -133,10 +145,4 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:title, :description, :start_date, :end_date, :organizer_id)
   end
-
-
-# preferred_period_st 10/16 12:00:00
-# slot_st = preferred_period_st
-# preferred_period 1.week
-# require_duration 2.hours
 end

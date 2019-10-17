@@ -25,9 +25,14 @@
                                 { class: "custom-select datetime-select" }
             | までに
         .row.form-group
-          .col-md-2.offset-md-3
-            = f.text_field :event_time, type: "number", class: "form-control", placeholder: "例) 120"
-          .col-md-5
+          .col-md-6
+            = f.time_select :event_time,
+                            { minute_step: 30,
+                              time_separator: '時間',
+                              default: Date.today + @event_time.seconds,
+                              start_hour: 0,
+                              end_hour: 8 },
+                            { class: "custom-select datetime-select" }
             | 分のイベントを開催したい
         .row.form-group
           .col-md-3
@@ -45,7 +50,7 @@
                   = label_tag "search-user-#{user.id}", user.name
     - if @candidate_dates.present?
       .modal-body
-        = form_with url: new_event_path, remote: true do |f|
+        = form_with url: new_event_path, class: "modal_dateToEvent--link", method: :get do |f|
           - @candidate_dates.each do |date|
             .select-date
               = f.radio_button :select_date, "#{ date.first }"

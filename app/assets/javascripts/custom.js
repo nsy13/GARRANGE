@@ -45,17 +45,31 @@ $('.modal').on('shown.bs.modal', function() {
     $('.attendance-form').submit();
   });
 
-  // イベント作成フォームの参加者検索
+  // 初期値の埋め込み
   $('.searched-users').children().hide();
+  $('input[name="search_user"]:checked').parent().show();
+  var inviting_users = [];
+  $('input[name="search_user"]:checked').each(function() {
+    inviting_users.push($(this).val());
+  });
+  $('<input>').attr({
+    'type': 'hidden',
+    'name': 'inviting_users',
+    'value': inviting_users
+  }).appendTo($('.modal_dateToEvent--link, .modal__searchDate--form'));
+
+  // イベント作成フォームの参加者リアルタイム検索
   $('input[name="user_name_or_email"]').keyup(function() {
     $('.searched-users').children().hide();
     $('input[name="search_user"]:checked').parent().show();
     var user_info = $('input[name="user_name_or_email"]').val();
-    $('.searched-users').children($("[class*='" + user_info + "']")).show();
+    $('.searched-users').find($("[class*='" + user_info + "']")).show();
   });
+
+  // 招待するユーザーの埋め込み
   $('input[name="search_user"]').change(function(){
-    $('input[name="inviting_users"]').remove();
     var inviting_users = [];
+    $('input[name="inviting_users"]').remove();
     $('input[name="search_user"]:checked').each(function() {
       inviting_users.push($(this).val());
     });
@@ -63,7 +77,7 @@ $('.modal').on('shown.bs.modal', function() {
       'type': 'hidden',
       'name': 'inviting_users',
       'value': inviting_users
-    }).appendTo($('.modal__newEvent--form, .modal__searchDate--form'));
+    }).appendTo($('.modal_dateToEvent--link, .modal__searchDate--form'));
   });
   $('.modal__newEvent--submit').click(function() {
     $('.modal__newEvent--submitDisplayNone').click();
@@ -76,13 +90,17 @@ $('.modal').on('shown.bs.modal', function() {
   });
 
   $('input[name="select_date"]').change(function() {
-    console.log('hello');
-    // $('input[name="selected-date]').remove();
-    // var selected_date = $('input[name="date_select"]:checked').val();
-    // $('<input>').attr({
-      //   'type': 'hidden',
-      //   'name': 'selected-date',
-      //   'value': selected_date
-      // }).appendTo($('#event-modal-form'));
+    $('.modal__newEvent--link').click(function() {
+      var event_time_hours = $('select[name="[event_time(4i)]"]').find('option:checked').val();
+      var event_time_minutes = $('select[name="[event_time(5i)]"]').find('option:checked').val();
+      var event_time = Number(event_time_hours) * 60 + Number(event_time_minutes);
+      $('<input>').attr({
+        'type': 'hidden',
+        'name': 'event_time',
+        'value': event_time
+      }).appendTo($('.modal_dateToEvent--link, .modal__searchDate--form'));
+      $('span').click();
+      Rails.fire($('.modal_dateToEvent--link')[0], 'submit');
+    });
   });
 });
