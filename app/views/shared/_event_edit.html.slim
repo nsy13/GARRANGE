@@ -36,24 +36,12 @@
           .col-md-3
             = f.label :start_date, "開始", class: "col-form-label"
           .col-md-9
-            = f.datetime_select :start_date,
-                                { user_month_numbers: true,
-                                  minute_step: 30,
-                                  start_year: Time.current.year,
-                                  end_year: Time.current.year + 5,
-                                  id: "inlineFormCustomSelect" },
-                                { class: "custom-select datetime-select" }
+            = f.text_field :start_date, class: "form-control datetimepicker-input-newEvent", id: "start_date_picker", data: {toggle: "datetimepicker", target: "#start_date_picker" }
         .row.form-group
           .col-md-3
             = f.label :end_date, "終了", class: "col-form-label"
           .col-md-9
-            = f.datetime_select :end_date,
-                                { user_month_numbers: true,
-                                  minute_step: 30,
-                                  start_year: Time.current.year,
-                                  end_year: Time.current.year + 5,
-                                  id: "inlineFormCustomSelect" },
-                                { class: "custom-select datetime-select" }
+            = f.text_field :end_date, class: "form-control datetimepicker-input-newEvent", id: "end_date_picker", data: {toggle: "datetimepicker", target: "#end_date_picker" }
       .modal-footer
         button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
         = f.submit "更新する",class: "btn btn-primary"

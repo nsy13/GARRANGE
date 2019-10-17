@@ -40,6 +40,17 @@ $(document).ajaxComplete(function() {
 
 // モーダル関係
 $('.modal').on('shown.bs.modal', function() {
+  // datetimepickerの設定
+  $('.datetimepicker-input-newEvent').datetimepicker({ stepping: 30, sideBySide: true });
+  $('.datetimepicker-input-newEvent').on("hide.datetimepicker", function() {
+    var start_date = $('#start_date_picker').val();
+    var end_date = $('#end_date_picker').val();
+    $('.datetimepicker-input').datetimepicker('defaultDate', start_date);
+    if (end_date < start_date) {
+      $('#end_date_picker').datetimepicker('date', start_date);
+    }
+  });
+
   // 招待されたイベントへの参加
   $('.participateSubmit').click(function() {
     $('.attendance-form').submit();
