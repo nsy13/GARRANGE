@@ -48,15 +48,24 @@ $('.modal').on('shown.bs.modal', function() {
   // 初期値の埋め込み
   $('.searched-users').children().hide();
   $('input[name="search_user"]:checked').parent().show();
-  var inviting_users = [];
+  if (typeof inviting_users !== 'undefined') {
+    inviting_users.length = 0;
+  } else {
+    var inviting_users = [];
+  };
   $('input[name="search_user"]:checked').each(function() {
     inviting_users.push($(this).val());
   });
+  // 日程検索フォーム上のinviting_usersも拾ってしまうので重複をフィルター
+  inviting_users = inviting_users.filter(function (x, i, self) {
+    return self.indexOf(x) === i;
+  });
+  $('input[name="inviting_users"]').remove();
   $('<input>').attr({
     'type': 'hidden',
     'name': 'inviting_users',
     'value': inviting_users
-  }).appendTo($('.modal_dateToEvent--link, .modal__searchDate--form'));
+  }).appendTo($('.modal_dateToEvent--link, .modal__searchDate--form, .modal__newEvent--form'));
 
   // イベント作成フォームの参加者リアルタイム検索
   $('input[name="user_name_or_email"]').keyup(function() {
@@ -68,8 +77,8 @@ $('.modal').on('shown.bs.modal', function() {
 
   // 招待するユーザーの埋め込み
   $('input[name="search_user"]').change(function(){
-    var inviting_users = [];
     $('input[name="inviting_users"]').remove();
+    inviting_users.length = 0;
     $('input[name="search_user"]:checked').each(function() {
       inviting_users.push($(this).val());
     });
@@ -77,7 +86,7 @@ $('.modal').on('shown.bs.modal', function() {
       'type': 'hidden',
       'name': 'inviting_users',
       'value': inviting_users
-    }).appendTo($('.modal_dateToEvent--link, .modal__searchDate--form'));
+    }).appendTo($('.modal_dateToEvent--link, .modal__searchDate--form, .modal__newEvent--form'));
   });
   $('.modal__newEvent--submit').click(function() {
     $('.modal__newEvent--submitDisplayNone').click();

@@ -3,10 +3,10 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @inviting_users = []
     if params[:event_time]
       @event.start_date = params[:select_date].to_time
       @event.end_date = @event.start_date + params[:event_time].to_i.minutes
-      @inviting_users = []
       params[:inviting_users].split(", ").each do |id|
         invited = User.find_by(id: id)
         @inviting_users << invited
