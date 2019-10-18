@@ -62,17 +62,19 @@
               - else
                 .no-info （招待中の参加者はいません）
         - if inviting_members.include?(current_user)
-          = form_with model: event , class: "attendance-form", local: true do |f|
-            = f.hidden_field :id, :value => event.id
+          = form_with url: accept_path, class: "modal__eventAttendance--form", local: true, method: :post do |f|
+            = f.hidden_field :event_id, value: event.id
             .row.form-group
               .col-md-12
                 = f.label :calendar, "参加する場合はイベントを登録するカレンダーを選択してください", class: "col-form-label"
               .col-md-12
                 = f.collection_select :calendar_id, calendars, :id, :name, { selected: false }, class: "form-control"
+              .col-md-12.displayNone
+                = f.submit class: "modal__participateEvent--submitDisplayNone"
       .modal-footer
         button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
         - if inviting_members.include?(current_user)
-          .btn.btn-primary.participateSubmit 参加する
+          button.btn.btn-primary.modal__participateEvent--submit type="button" 参加する
           .btn.btn-danger.absentSubmit = link_to "欠席する", absent_path(event_id: event.id)
         - elsif current_user?(organizer)
           button.btn.btn-outline-primary.modal__eventEdit--link 編集する

@@ -5,5 +5,5 @@
 | $(".modalSection").prepend('<div class="modalSection__eventForm modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
 | $(".modalSection").prepend('<div class="modalSection__searchDate modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
 | $(".modalSection__eventEdit").html("#{escape_javascript(render 'shared/event_edit', { event: @event, calendars: @calendars, calendar: @calendar }) }");
-| modal_setting();
+| modal_eventEdit();
 | $(".modalSection__eventEdit").modal("show")

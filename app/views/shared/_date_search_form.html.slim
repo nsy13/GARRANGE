@@ -6,6 +6,7 @@
         span aria-hidden="true" &times;
     .modal-body
       = form_with url: date_search_path, class: "modal__searchDate--form", method: :get do |f|
+        = f.hidden_field :event_time, value: @event_time
         .row.form-group
           .col-md-10
             = f.text_field :start_date, class: "form-control datetimepicker-input", id: "start_date_picker", data: {toggle: "datetimepicker", target: "#start_date_picker" }, autocomplete: "off"
@@ -41,11 +42,12 @@
             = f.submit class: "modal__searchDate--submitDisplayNone"
     - if @candidate_dates.present?
       .modal-body
-        = form_with url: new_event_path, class: "modal_dateToEvent--link", method: :get do |f|
+        = form_with url: new_event_path, class: "modal__dateToEvent--form", method: :get do |f|
+          = f.hidden_field :event_time, value: @event_time
           - @candidate_dates.each do |date|
             .select-date
               = f.radio_button :select_date, "#{ date.first }"
-              = f.label :select_date, "#{l date.first} 〜 #{l date.last}"
+              = f.label "#{ date.first }", "#{l date.first} 〜 #{l date.last}"
             .displayNone
               = f.submit class: "modal__dateToEvent--submitDisplayNone"
 

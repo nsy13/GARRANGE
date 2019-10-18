@@ -6,7 +6,7 @@ class EventsController < ApplicationController
     @inviting_users = []
     if params[:event_time]
       @event.start_date = params[:select_date].to_time
-      @event.end_date = @event.start_date + params[:event_time].to_i.minutes
+      @event.end_date = @event.start_date + params[:event_time].to_i.seconds
       params[:inviting_users].split(", ").each do |id|
         invited = User.find_by(id: id)
         @inviting_users << invited
@@ -60,7 +60,7 @@ class EventsController < ApplicationController
     inviting_id.each do |i_id|
       @inviting_members << User.find_by(id: i_id)
     end
-    @calendars = current_user.calendars
+    @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
   end
 
   def update
@@ -88,14 +88,15 @@ class EventsController < ApplicationController
 
   def accept
     current_user.user_events.find_by(event_id: params[:event_id]).update_attributes(accepted: true)
+    CalendarEvent.create(calendar_id: params[:calendar_id], event_id: params[:event_id])
     flash[:success] = "イベントへの招待を承認しました"
-    redirect_to notifications_index_path
+    redirect_to root_path
   end
 
   def absent
     current_user.user_events.find_by(event_id: params[:event_id]).delete
     flash[:warning] = "イベントを欠席しました"
-    redirect_to notifications_index_path
+    redirect_to root_path
   end
 
   def date_search
@@ -119,7 +120,7 @@ class EventsController < ApplicationController
       @candidate_dates = []
       preferred_period_start = params[:start_date].to_time
       preferred_period_end = params[:end_date].to_time
-      @event_time = ((params["event_time(4i)"].to_i * 60) + (params["event_time(5i)"].to_i)) * 60
+      @event_time = params[:event_time].to_i
       slot_st = preferred_period_start
       slot = (slot_st)..(slot_st + @event_time)
       slot = (slot_st)..(slot_st + @event_time)

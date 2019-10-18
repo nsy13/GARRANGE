@@ -1,7 +1,9 @@
 .modal-dialog.modal-lg
   .modal-content
-    = form_with model: event, local:true do |f|
+    = form_with model: event, class: "modal__eventEdit--form", local:true do |f|
       = f.hidden_field :organizer_id, value: current_user.id
+      = f.hidden_field :start_date, value: event.start_date
+      = f.hidden_field :end_date, value: event.end_date
       .modal-header
         h5.modal-title イベントを編集する
         button.close type="button" data-dismiss="modal" aria-label="Close"
@@ -34,14 +36,17 @@
             = f.text_field :required_member, class: "form-control"
         .row.form-group
           .col-md-3
-            = f.label :start_date, "開始", class: "col-form-label"
+            = f.label :start_time, "開始", class: "col-form-label"
           .col-md-9
-            = f.text_field :start_date, class: "form-control datetimepicker-input", id: "start_date_picker", data: {toggle: "datetimepicker", target: "#start_date_picker" }, autocomplete: "off"
+            = f.text_field :start_time, class: "form-control datetimepicker-input", id: "start_date_picker", data: {toggle: "datetimepicker", target: "#start_date_picker" }, autocomplete: "off"
         .row.form-group
           .col-md-3
-            = f.label :end_date, "終了", class: "col-form-label"
+            = f.label :end_time, "終了", class: "col-form-label"
           .col-md-9
-            = f.text_field :end_date, class: "form-control datetimepicker-input", id: "end_date_picker", data: {toggle: "datetimepicker", target: "#end_date_picker" }, autocomplete: "off"
+            = f.text_field :end_time, class: "form-control datetimepicker-input", id: "end_date_picker", data: {toggle: "datetimepicker", target: "#end_date_picker" }, autocomplete: "off"
+        .row.form-group
+          .col-md-12.displayNone
+            = f.submit class: "modal__eventEdit--submitDisplayNone"
       .modal-footer
         button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
-        = f.submit "更新する",class: "btn btn-primary"
+        button.btn.btn-primary.modal__eventEdit--submit type="button" 更新する
