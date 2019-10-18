@@ -1,2 +1,9 @@
-| $(".modalSection__eventForm").html("#{escape_javascript(render 'shared/event_form', { event: @event }) }");
-| $(".modalSection__eventForm").modal("show")
+| $('.modalSection').children().remove();
+| $('.modal-backdrop').remove();
+| $('.modalSection').prepend('<div class="modalSection__eventEdit modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+| $('.modalSection').prepend('<div class="modalSection__eventDetail modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+| $('.modalSection').prepend('<div class="modalSection__eventForm modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+| $('.modalSection').prepend('<div class="modalSection__searchDate modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+| $('.modalSection__eventForm').html("#{escape_javascript(render 'shared/event_form', { event: @event }) }");
+| modal_setting();
+| $('.modalSection__eventForm').modal("show")

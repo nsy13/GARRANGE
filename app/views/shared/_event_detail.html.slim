@@ -2,6 +2,7 @@
   .modal-content
     .modal-header
       h5.modal-title イベント詳細
+      = hidden_field_tag "event_id", event.id
       button.close type="button" data-dismiss="modal" aria-label="Close"
         span aria-hidden="true" &times;
     .modal-body
@@ -74,5 +75,5 @@
           .btn.btn-primary.participateSubmit 参加する
           .btn.btn-danger.absentSubmit = link_to "欠席する", absent_path(event_id: event.id)
         - elsif current_user?(organizer)
-          .btn.btn-outline-primary.edit = link_to "編集する", edit_event_path, remote: true
+          button.btn.btn-outline-primary.modal__eventEdit--link 編集する
 

@@ -103,7 +103,7 @@ class EventsController < ApplicationController
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
     @all_users = User.all
     @users = []
-    @event_time = 0
+    @event_time = 1800
     if params[:selected_calendars]
       selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
       @calendar = Calendar.find_by(id: selected_calendars_id[0])
@@ -117,8 +117,8 @@ class EventsController < ApplicationController
       end
       @users << current_user
       @candidate_dates = []
-      preferred_period_start = Time.zone.local(params["preferred_period_start(1i)"].to_i, params["preferred_period_start(2i)"].to_i, params["preferred_period_start(3i)"].to_i, params["preferred_period_start(4i)"].to_i, params["preferred_period_start(5i)"].to_i)
-      preferred_period_end = Time.zone.local(params["preferred_period_end(1i)"].to_i, params["preferred_period_end(2i)"].to_i, params["preferred_period_end(3i)"].to_i, params["preferred_period_end(4i)"].to_i, params["preferred_period_end(5i)"].to_i)
+      preferred_period_start = params[:start_date].to_time
+      preferred_period_end = params[:end_date].to_time
       @event_time = ((params["event_time(4i)"].to_i * 60) + (params["event_time(5i)"].to_i)) * 60
       slot_st = preferred_period_start
       slot = (slot_st)..(slot_st + @event_time)
