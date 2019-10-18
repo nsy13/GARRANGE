@@ -8,9 +8,9 @@
       = form_with url: date_search_path, class: "modal__searchDate--form", method: :get do |f|
         .row.form-group
           .col-md-10
-            = f.text_field :start_date, class: "form-control datetimepicker-input-searchDate", id: "start_date_picker", data: {toggle: "datetimepicker", target: "#start_date_picker" }
+            = f.text_field :start_date, class: "form-control datetimepicker-input", id: "start_date_picker", data: {toggle: "datetimepicker", target: "#start_date_picker" }, autocomplete: "off"
             | から
-            = f.text_field :end_date, class: "form-control datetimepicker-input-searchDate", id: "end_date_picker", data: {toggle: "datetimepicker", target: "#end_date_picker" }
+            = f.text_field :end_date, class: "form-control datetimepicker-input", id: "end_date_picker", data: {toggle: "datetimepicker", target: "#end_date_picker" }, autocomplete: "off"
             | までに
         .row.form-group
           .col-md-6
@@ -36,6 +36,9 @@
                   - else
                     = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
                   = label_tag "search-user-#{user.id}", user.name
+        .row.form-group
+          .col-md-12.displayNone
+            = f.submit class: "modal__searchDate--submitDisplayNone"
     - if @candidate_dates.present?
       .modal-body
         = form_with url: new_event_path, class: "modal_dateToEvent--link", method: :get do |f|
@@ -43,6 +46,9 @@
             .select-date
               = f.radio_button :select_date, "#{ date.first }"
               = f.label :select_date, "#{l date.first} 〜 #{l date.last}"
+            .displayNone
+              = f.submit class: "modal__dateToEvent--submitDisplayNone"
+
     .modal-footer
       button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
       button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を検索する
