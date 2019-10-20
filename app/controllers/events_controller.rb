@@ -144,22 +144,20 @@ class EventsController < ApplicationController
       preferred_period_end = params[:end_date].in_time_zone
       @event_time = params[:event_time].to_i
       slot_st = preferred_period_start
-      slot = (slot_st)..(slot_st + @event_time)
-      slot = (slot_st)..(slot_st + @event_time)
+      slot = slot_st..(slot_st + @event_time)
       until slot.include?(preferred_period_end + 1.minute)
         if @inviting_users.all? { |user| user.events.none? { |event| include_slot?(event, slot) } }
           @candidate_dates << slot
         end
         slot_st += 30.minutes
-        slot = slot_st .. slot_st + @event_time
-        slot = slot_st .. slot_st + @event_time
+        slot = slot_st..(slot_st + @event_time)
         break if @candidate_dates.size == 3
       end
     end
   end
 
   def include_slot?(event, slot)
-    event_time = (event.start_date + 1.minute) .. (event.end_date - 1.minute)
+    event_time = (event.start_date + 1.minute)..(event.end_date - 1.minute)
     event_time.overlaps?(slot)
   end
 
