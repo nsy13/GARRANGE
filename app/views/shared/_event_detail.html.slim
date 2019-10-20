@@ -56,12 +56,12 @@
             label.col-form-label 招待中
           .col-md-8
             .no-border
-              - if inviting_members.present?
-                - inviting_members.each do |inviting|
+              - if inviting_users.present?
+                - inviting_users.each do |inviting|
                   = link_to "#{inviting.name}, ", root_path
               - else
                 .no-info （招待中の参加者はいません）
-        - if inviting_members.include?(current_user)
+        - if inviting_users.include?(current_user)
           = form_with url: accept_path, class: "modal__eventAttendance--form", local: true, method: :post do |f|
             = f.hidden_field :event_id, value: event.id
             .row.form-group
@@ -73,7 +73,7 @@
                 = f.submit class: "modal__participateEvent--submitDisplayNone"
       .modal-footer
         button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
-        - if inviting_members.include?(current_user)
+        - if inviting_users.include?(current_user)
           button.btn.btn-primary.modal__participateEvent--submit type="button" 参加する
           .btn.btn-danger.absentSubmit = link_to "欠席する", absent_path(event_id: event.id)
         - elsif current_user?(organizer)

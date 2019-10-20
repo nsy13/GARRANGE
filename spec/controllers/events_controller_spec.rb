@@ -34,8 +34,8 @@ RSpec.describe EventsController, type: :controller do
     it "assigns @participants" do
       expect(assigns(:participants)).to eq [user1, user2]
     end
-    it "assigns @inviting_members" do
-      expect(assigns(:inviting_members)).to eq [user3]
+    it "assigns @inviting_users" do
+      expect(assigns(:inviting_users)).to eq [user3]
     end
     it "assigns @calendars" do
       expect(assigns(:calendars)).to eq [calendar]
