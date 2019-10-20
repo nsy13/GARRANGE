@@ -41,14 +41,14 @@ $(document).ajaxComplete(function() {
 // モーダル関係
 function modal_newEvent(){
   $('.modal').on('shown.bs.modal', function() {
-    datetimepicker_settings();
+    var default_start = $('input[name="event[start_date]"]').val();
+    var default_end = $('input[name="event[end_date]"]').val();
+    datetimepicker_settings(default_start, default_end);
     realtime_searchUser();
     invite_user('.modal__newEvent--form');
     form_submit('.modal__newEvent--submit', '.modal__newEvent--submitDisplayNone');
     set_invitedUsers('.modal__newEvent--form');
   });
-  // set_defaultValue
-  // modal_close
 }
 
 function modal_searchDate(){
@@ -61,7 +61,6 @@ function modal_searchDate(){
     set_eventTime('.modal__dateToEvent--form');
     set_invitedUsers('.modal__dateToEvent--form, .modal__searchDate--form');
   });
-  // modal_close
 }
 
 function modal_eventEdit(){
@@ -69,18 +68,11 @@ function modal_eventEdit(){
     var default_start = $('input[name="event[start_date]"]').val();
     var default_end = $('input[name="event[end_date]"]').val();
     datetimepicker_settings(default_start, default_end);
-    $('.datetimepicker-input').on("hide.datetimepicker", function() {
-      var start_date = $('#start_date_picker').val();
-      var end_date = $('#end_date_picker').val();
-      $('input[name="event[start_date]"]').val(start_date);
-      $('input[name="event[end_date]"]').val(end_date);
-    })
     realtime_searchUser();
     invite_user('.modal__eventEdit--form');
     form_submit('.modal__eventEdit--submit', '.modal__eventEdit--submitDisplayNone');
     set_invitedUsers('.modal__eventEdit--form');
   });
-  // modal_close
 }
 
 function modal_eventDetail(){
@@ -108,8 +100,12 @@ function datetimepicker_settings(default_start, default_end){
     start_date = $('#start_date_picker').val();
     end_date = $('#end_date_picker').val();
     if (end_date < start_date) {
-      $('#end_date_picker').datetimepicker('date', start_date);
+      end_date = start_date;
+      $('#end_date_picker').datetimepicker('date', end_date);
     }
+    // イベント編集フォーム用のinputタグを更新
+    $('input[name="event[start_date]"]').val(start_date);
+    $('input[name="event[end_date]"]').val(end_date);
   });
 };
 
@@ -145,7 +141,7 @@ function invite_user(form){
 
 function form_submit(formButton, form){
   $(formButton).click(function() {
-    $('span').click();
+    // $('span').click();
     $(form).click();
   });
 };
