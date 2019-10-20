@@ -41,9 +41,15 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @all_users = User.all
     @event = Event.find(params[:id])
     @calendar = @event.calendars.first
-    @calendars = current_user.calendars
+    @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
+    @participants_inviting_users = []
+    participants_inviting_users_id = @event.user_events.map(&:user_id)
+    participants_inviting_users_id.each do |id|
+      @participants_inviting_users << User.find_by(id: id)
+    end
   end
 
   def show
@@ -56,9 +62,9 @@ class EventsController < ApplicationController
       @participants << User.find_by(id: p_id)
     end
     inviting_id = @event.user_events.where(accepted: false).map(&:user_id)
-    @inviting_members = []
+    @inviting_users = []
     inviting_id.each do |i_id|
-      @inviting_members << User.find_by(id: i_id)
+      @inviting_users << User.find_by(id: i_id)
     end
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
   end
@@ -67,6 +73,22 @@ class EventsController < ApplicationController
     event = Event.find(params[:id])
     if current_user.id == event.organizer_id
       if event.update_attributes(event_params)
+        participants_inviting_users = []
+        participants_inviting_users_id = event.user_events.map(&:user_id)
+        participants_inviting_users_id.each do |id|
+          participants_inviting_users << User.find_by(id: id)
+        end
+        params[:inviting_users].split(", ").each do |id|
+          invited = User.find_by(id: id)
+          unless UserEvent.find_by(user_id: invited.id, event_id: event.id)
+            UserEvent.create(user_id: invited.id, event_id: event.id)
+          end
+          participants_inviting_users.each do |event_member|
+            unless event_member == invited
+              UserEvent.find_by(user_id: event_member.id, event_id: event.id).delete
+            end
+          end
+        end
         flash[:success] = "イベント情報を更新しました"
         redirect_to root_path
       else
