@@ -125,7 +125,7 @@ class EventsController < ApplicationController
     @event = Event.new
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
     @all_users = User.all
-    @users = []
+    @inviting_users = []
     @event_time = 1800
     if params[:selected_calendars]
       selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
@@ -136,9 +136,9 @@ class EventsController < ApplicationController
     if params[:inviting_users]
       params[:inviting_users].split(", ").each do |id|
         invited = User.find_by(id: id)
-        @users << invited
+        @inviting_users << invited
       end
-      @users << current_user
+      @inviting_users << current_user
       @candidate_dates = []
       preferred_period_start = params[:start_date].in_time_zone
       preferred_period_end = params[:end_date].in_time_zone
@@ -147,7 +147,7 @@ class EventsController < ApplicationController
       slot = (slot_st)..(slot_st + @event_time)
       slot = (slot_st)..(slot_st + @event_time)
       until slot.include?(preferred_period_end + 1.minute)
-        if @users.all? { |user| user.events.none? { |event| include_slot?(event, slot) } }
+        if @inviting_users.all? { |user| user.events.none? { |event| include_slot?(event, slot) } }
           @candidate_dates << slot
         end
         slot_st += 30.minutes
