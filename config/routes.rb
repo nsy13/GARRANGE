@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post '/accept', to: 'events#accept'
   get '/absent', to: 'events#absent'
   get '/calendar/access', to: 'calendars#access_calender'
+  get '/events/date/search', to: 'events#date_search', as: 'date_search'
   get '/users/:user_id', to: 'home#index'
   get 'search', to: 'home#search_user'
   # get 'gcals/get_google_calendar_event', to: 'gcals#get_google_calendar_event'

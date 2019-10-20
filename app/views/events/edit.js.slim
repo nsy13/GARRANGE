@@ -1,3 +1,9 @@
-| $("#event-detail").modal("hide");
-| $("#event-edit").html("#{escape_javascript(render 'shared/event_edit', { event: @event, calendars: @calendars, calendar: @calendar }) }");
-| $("#event-edit").modal("show")
+| $(".modalSection").children().remove();
+| $('.modal-backdrop').remove();
+| $(".modalSection").prepend('<div class="modalSection__eventEdit modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+| $(".modalSection").prepend('<div class="modalSection__eventDetail modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+| $(".modalSection").prepend('<div class="modalSection__eventForm modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+| $(".modalSection").prepend('<div class="modalSection__searchDate modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
+| $(".modalSection__eventEdit").html("#{escape_javascript(render 'shared/event_edit', { event: @event, calendars: @my_calendars, calendar: @calendar, all_users: @all_users, participants_inviting_users: @participants_inviting_users }) }");
+| modal_eventEdit();
+| $(".modalSection__eventEdit").modal("show")

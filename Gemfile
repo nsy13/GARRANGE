@@ -5,9 +5,11 @@ ruby '2.5.6'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap'
+gem "bootstrap4-datetime-picker-rails"
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'faker'
+gem "font-awesome-rails"
 gem 'fullcalendar-rails'
 gem 'google-api-client', require: 'google/apis/calendar_v3'
 gem 'html2slim'
