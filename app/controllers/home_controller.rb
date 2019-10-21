@@ -24,6 +24,9 @@ class HomeController < ApplicationController
     end
   end
 
+  def about
+  end
+
   def settings
     @new_calendar = Calendar.new
     user_calendars = current_user.user_calendars

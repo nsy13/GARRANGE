@@ -1,0 +1,24 @@
+.about
+  .container
+    .row
+      .about-top.col-md-12
+        h1.about-logo GArrange
+        .about-description GArrangeは複数人のスケジューリングを支援するサービスです
+      .about-features.col-md-12.row
+        .about-feature.col-md-5.offset-md-1
+          .feature-icon
+            = fa_icon "calendar"
+          .feature-description
+            | 通常のカレンダー機能に加え<br>
+            | 他ユーザーを予定に招待することができます
+        .about-feature.col-md-5
+          .feature-icon
+            = fa_icon "users"
+          .feature-description
+            | 参加してほしいユーザーの空いている日時を<br>
+            | 検索することができます
+      - unless user_signed_in?
+        .signup-message.col-md-12
+          | 今すぐ試してみましょう
+        .signup-link.col-md-12
+          = link_to "新規ユーザー登録", signup_path, class: "btn btn-primary"
