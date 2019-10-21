@@ -6,8 +6,6 @@ nav.navbar.navbar-fixed-top.navbar-expand-md.navbar-dark.bg-dark.navbar-custom
     #navbar-content.collapse.navbar-collapse
       ul.navbar-nav.ml-auto
         - if user_signed_in?
-          li.nav-item.mr-sm-2.nav-search
-            / = render 'shared/search_form'
           li.nav-item
             = link_to "通知", notifications_index_path, class: "nav-link"
           li.nav-item.dropdown

@@ -1,5 +1,5 @@
 // Topページ
-jQuery(document).ready(function() {
+$(document).ready(function() {
   // 選択したカレンダーに登録されたイベントを表示
 	$('input[name="select-calendar"]').change(function() {
     $('input[name="selected_calendars"]').remove();
@@ -16,6 +16,19 @@ jQuery(document).ready(function() {
     Rails.fire($('.sidebar__calendarsList--form')[0], 'submit');
 	});
 });
+
+$(document).ready(function(){
+  // カレンダー展開リンクを踏んだ際のアイコン変更
+  $('.calendar-collapse').on('click', function(){
+    if($(this).attr('aria-expanded') === 'true'){
+      $(this).find('i').removeClass('fa-chevron-up');
+      $(this).find('i').addClass('fa-chevron-down');
+    } else {
+      $(this).find('i').removeClass('fa-chevron-down');
+      $(this).find('i').addClass('fa-chevron-up');
+    }
+  })
+})
 
 // カレンダー編集画面
 $(document).ready(function() {

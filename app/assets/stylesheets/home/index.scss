@@ -1,0 +1,91 @@
+.sidebar {
+  padding-bottom: 30px;
+}
+
+.sidebar__calendarsList {
+  max-height: 300px;
+  overflow: auto;
+  a {
+    color: #384452;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.sidebar__calendarsList {
+  margin: 10px 0;
+  .sidebar__calendarsList--myCalendars {
+    padding: 10px 0;
+  }
+  .sidebar__calendarsList--othersCalendars {
+    padding: 10px 0;
+  }
+  .sidebar__calendarsList--myContentBox {
+    padding: 10px 0;
+  }
+  .sidebar__calendarsList--othersContentBox  {
+    padding: 10px 0;
+  }
+}
+
+.sidebar__profile {
+  margin-bottom: 20px;
+}
+
+.sidebar__newEvent {
+  margin-bottom: 20px;
+}
+
+.sidebar__searchDate {
+  margin-bottom: 20px;
+}
+
+.search-field {
+  width: 85%;
+  height: 30px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  &:focus {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    border-right: 0;
+  }
+}
+
+.search-button {
+  display: inline-block;
+  width: 15%;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #999;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.sidebar__searchUsers--list {
+  max-height: 200px;
+  overflow: auto;
+}
+
+.no-border {
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+  &:focus {
+    box-shadow: none;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.calendar {
+  padding-bottom: 30px;
+}
