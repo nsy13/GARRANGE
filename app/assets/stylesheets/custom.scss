@@ -1,38 +1,77 @@
-@import "bootstrap";
+// // home page
 
-// home page
+// ul {
+//   list-style: none;
+// }
 
-ul {
-  list-style: none;
+// .event-title {
+//   height: 200px;
+// }
+
+// // event-form modal
+// .datetime-select {
+//   width: auto;
+// }
+
+// // event-detail modal
+// .no-border {
+//   border: 0;
+//   border-bottom: solid 1px rgb(199, 199, 199);
+//   border-radius: 0;
+// }
+
+// .no-info {
+//   color: rgb(199, 199, 199);
+// }
+
+// .absentSubmit {
+//   a {
+//     text-decoration: none;
+//     color: #fff;
+//   }
+// }
+
+// .displayNone {
+//   display: none;
+// }
+body {
+	margin: 0;
+	height: 100%;
+	font-family: 'Lato', sans-serif;
+  font-weight: 400;
 }
 
-.event-title {
-  height: 200px;
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 700;
 }
 
-// event-form modal
-.datetime-select {
-  width: auto;
+p {
+	padding: 0;
+	margin-bottom: 12px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 24px;
+	margin-top: 10px;
 }
 
-// event-detail modal
-.no-border {
-  border: 0;
-  border-bottom: solid 1px rgb(199, 199, 199);
-  border-radius: 0;
+img {
+	height: auto;
+	max-width: 100%;
 }
 
-.no-info {
-  color: rgb(199, 199, 199);
+a {
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+	-webkit-transition: background-color .4s linear, color .4s linear;
+	-moz-transition: background-color .4s linear, color .4s linear;
+	-o-transition: background-color .4s linear, color .4s linear;
+	-ms-transition: background-color .4s linear, color .4s linear;
+	transition: background-color .4s linear, color .4s linear;
 }
 
-.absentSubmit {
-  a {
-    text-decoration: none;
-    color: #fff;
-  }
-}
-
-.displayNone {
-  display: none;
+ul, ol {
+	list-style: none;
 }

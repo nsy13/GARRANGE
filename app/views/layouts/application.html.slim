@@ -8,26 +8,14 @@ html
     = stylesheet_link_tag    'application', media: 'all'
   body
     header
-      nav
-        - if user_signed_in?
-          |  Logged in as
-          strong
-            = current_user.email
-          | .
-          = link_to "編集", edit_user_registration_path
-          |  |
-          = link_to "ログアウト", logout_path, method: :delete
-        - else
-          = link_to "サインイン", signup_path
-          |  |
-          = link_to "ログイン", login_path
-          = link_to "Facebookログイン", user_facebook_omniauth_authorize_path
-          = link_to "Googleログイン", user_google_oauth2_omniauth_authorize_path
-    div.container
+      = render 'layouts/header'
+    .container
       p.notice
         = notice
       p.alert
         = alert
-      = render "shared/flash_message"
+      = render 'shared/flash_message'
       = yield
+    footer
+      = render 'layouts/footer'
     = javascript_include_tag 'application'
