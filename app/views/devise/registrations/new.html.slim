@@ -1,0 +1,32 @@
+.signupLayout
+  .container
+    .row
+      .col-md-6.offset-md-3
+        .signupBody
+          .mail-login
+            h2.signup-title Sign up
+            hr
+            p.lead メールアドレスで登録
+            = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+              = devise_error_messages!
+              .form-group
+                = f.text_field :name, autofocus: true, placeholder: "ユーザー名", class: "form-control", required: true
+              .form-group
+                = f.email_field :email, placeholder: "メールアドレス", class: "form-control", required: true
+              .form-group
+                = f.password_field :password, placeholder: "パスワード", class: "form-control", required: true
+              .actions
+                = f.submit "登録する", class: "btn btn-primary"
+            hr
+          .sns-login
+            p.lead メールアドレス以外で登録
+            .facebook-login
+              = link_to user_facebook_omniauth_authorize_path, class: "facebook-link" do
+                i.fa.fa-facebook
+                | Facebookアカウントで登録
+            .google-login
+              = link_to user_google_oauth2_omniauth_authorize_path, class: "google-link" do
+                i.fa.fa-google
+                | Googleアカウントで登録
+          .login-link
+            = link_to "アカウントをお持ちの方はこちら", login_path
