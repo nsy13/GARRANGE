@@ -1,5 +1,5 @@
 - if user_signed_in?
-  .container
+  .index.container
     .row
       .col-md-4
         .sidebar
@@ -57,7 +57,33 @@
             = render 'shared/fullcalendar'
       .modalSection
 - else
-  #top
-    .top-body
-      .container
-        .row
+  .top
+    .top-body.container-fluid
+      .row
+        .top-left.col-md-6
+          .bg-image
+            .bg-mask
+              .container
+                .row
+                  .col-md-10.offset-md-1
+                    .top-logo
+                      h1 GArrange
+                    .top-left-text
+                      p 忙しいチームの日程調整を支援するサービスです
+        .top-right.col-md-6
+          .container
+            .row
+              .top-login-link.col-md-8.offset-md-2.row
+                .login-message.col-md-12
+                  p 今すぐ始めてみる
+                .testLogin-link.col-md-12
+                  = link_to "テストユーザーでログイン", "#", class: "btn btn-primary"
+                .divider.line.razor.col-md-12
+                .signin-link.col-md-12
+                  = link_to "アカウント作成", signup_path, class: "btn btn-primary"
+                .login-link.col-md-12
+                  = link_to "ログイン", login_path, class: "btn btn-outline-primary"
+                / .facebook-link.col-md-12
+                /   = link_to "Facebookアカウントでログイン", user_facebook_omniauth_authorize_path, class: "btn btn-primary"
+                / .google-link.col-md-12
+                /   = link_to "Googleアカウントでログイン", user_google_oauth2_omniauth_authorize_path, class: "btn btn-danger"

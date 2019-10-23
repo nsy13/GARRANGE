@@ -1,5 +1,5 @@
-.sidebar {
-  padding-bottom: 30px;
+.index {
+  padding: 50px 0;
 }
 
 .sidebar__calendarsList {
@@ -86,6 +86,114 @@
   }
 }
 
-.calendar {
-  padding-bottom: 30px;
+.top {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.top-body {
+  margin: 0;
+  padding: 0;
+}
+
+.top-right {
+  text-align: center;
+  margin: 0;
+  padding: 0
+}
+
+.top-left {
+  text-align: center;
+  margin: 0;
+  padding: 0
+
+}
+
+.top-logo {
+  h1 {
+    font-family: 'Lato', sans-serif;
+    font-size: 60px;
+    color: rgb(136, 162, 247);
+    margin: 90px 0;
+    font-weight: bold;
+  }
+}
+
+.top-left-text {
+  p {
+    font-size: 20px;
+    color: #6d6f72;
+  }
+}
+
+.bg-image {
+  background: image-url("top.jpg") center center / cover no-repeat;
+  height: 800px;
+}
+
+.bg-mask {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.top-login-link {
+  margin-top: 100px;
+}
+
+.login-message {
+  p {
+    font-size: 20px;
+    color: #6d6f72;
+  }
+}
+
+.signin-link {
+  margin: 20px 0;
+  a {
+    width: 100%;
+  }
+}
+
+.login-link {
+  margin: 20px 0;
+  a {
+    width: 100%;
+  }
+}
+
+.testLogin-link {
+  margin: 20px 0;
+  a {
+    width: 100%;
+  }
+}
+
+.facebook-link {
+  a{
+    background-color: #4267b2;
+    width: 100%;
+    border: solid 0.5px #4267b2;
+    &:hover {
+      background-color: #0241bd;
+    }
+  }
+  margin: 20px 0;
+}
+
+.google-link {
+  a {
+    background-color: rgb(248, 79, 37);
+    width: 100%;
+    border: solid 0.5px rgb(248, 79, 37);
+    &:hover {
+      background-color: rgb(212, 49, 8);
+    }
+  }
+  margin: 20px 0
+}
+
+.divider {
+  border-bottom: solid 0.5px rgb(128, 128, 128);
+  margin: 20px 0
 }
