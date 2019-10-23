@@ -1,3 +1,8 @@
+// flashメッセージ
+$(function(){
+  setTimeout("$('.flash').fadeOut('slow')", 3000)
+})
+
 // Topページ
 $(document).ready(function() {
   // 選択したカレンダーに登録されたイベントを表示
