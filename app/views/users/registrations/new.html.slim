@@ -7,7 +7,7 @@
             h2.signup-title Sign up
             hr
             p.lead メールアドレスで登録
-            = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+            = form_for(resource, as: resource_name, url: signup_path) do |f|
               = devise_error_messages!
               .form-group
                 = f.text_field :name, autofocus: true, placeholder: "ユーザー名", class: "form-control", required: true

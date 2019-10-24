@@ -1,0 +1,32 @@
+.userEditLayout
+  .container
+    .row
+      .col-md-6.offset-md-3
+        .userEditBody
+          .edit-form
+            p.userEdit-title ユーザー設定
+            hr
+            .userEdit
+              = form_for(resource, as: resource_name, url: setting_profile_path) do |f|
+                = devise_error_messages!
+                .form-group
+                  = f.text_field :name, placeholder: "ユーザー名", class: "form-control"
+                .form-group
+                  = f.email_field :email, placeholder: "メールアドレス", class: "form-control"
+                .actions
+                  = f.submit "変更する", class: "btn btn-primary"
+            p.passwordEdit-title パスワード変更
+            hr
+            .passwordEdit
+              = form_for(@user, url: { controller: "/users", action: "update_password" } ) do |f|
+                .form-group
+                  = f.password_field :current_password, placeholder: "現在のパスワード", autocomplete: "off", class: "form-control"
+                .form-group
+                  = f.password_field :password, placeholder: "新しいパスワード", autocomplete: "off", class: "form-control"
+                .action_container
+                  = f.submit "変更する", class: "btn btn-primary"
+          .withdrawal-form
+            p.withdrawal-title アカウント削除
+            hr
+            .withdrawal-link
+              = link_to "アカウントを削除する", delete_path, class: "btn btn-danger", method: :delete, data: { confirm: "本当に削除しますか？" }
