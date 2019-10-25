@@ -7,10 +7,11 @@ html
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all'
   body
-    header
-      = render 'layouts/header'
-      = render 'shared/flash_message'
-    = yield
-    footer
-      = render 'layouts/footer'
-    = javascript_include_tag 'application'
+    .wrapper
+      header
+        = render 'layouts/header'
+        = render 'shared/flash_message'
+      = yield
+      footer
+        = render 'layouts/footer'
+      = javascript_include_tag 'application'
