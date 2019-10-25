@@ -1,0 +1,12 @@
+.notificationCard
+  = link_to event_path(id: notification[:event].id), class: "notification-link", remote: true do
+    .notificationBody
+      .notification-title
+        = notification[:event].title
+      .notification-description
+        p
+          | #{ l notification[:event].start_date } から #{ l notification[:event].end_date } <br>
+          | イベント企画者: #{ notification[:organizer].name } <br>
+          | イベント詳細:<br>
+          | #{ notification[:event].description }
+
