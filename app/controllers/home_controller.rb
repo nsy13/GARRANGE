@@ -27,13 +27,6 @@ class HomeController < ApplicationController
   def about
   end
 
-  def settings
-    @new_calendar = Calendar.new
-    user_calendars = current_user.user_calendars
-    @my_calendars = user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
-    @calendar = @my_calendars.first
-  end
-
   def search_user
     @q = User.ransack(params[:q])
     if params[:q][:name_or_email_cont].blank?
