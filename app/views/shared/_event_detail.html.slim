@@ -9,6 +9,11 @@
       .container-fluid
         .row.form-group
           .col-md-3
+            label.col-form-label カレンダー
+          .col-md-8
+            .no-border = calendar.name
+        .row.form-group
+          .col-md-3
             label.col-form-label タイトル
           .col-md-8
             .no-border = event.title
@@ -75,7 +80,11 @@
         button.btn.btn-secondary type="button" data-dismiss="modal" 閉じる
         - if inviting_users.include?(current_user)
           button.btn.btn-primary.modal__participateEvent--submit type="button" 参加する
-          .btn.btn-danger.absentSubmit = link_to "欠席する", absent_path(event_id: event.id)
+          = link_to "欠席する", absent_path(event_id: event.id), class: "btn btn-danger absentSubmit"
         - elsif current_user?(organizer)
           button.btn.btn-outline-primary.modal__eventEdit--link 編集する
+          = link_to "削除する", event_path(event), method: :delete, class: "btn btn-outline-danger modal__eventDelete--link "
+        - elsif participants.include?(current_user)
+          = link_to "欠席する", absent_path(event_id: event.id, calendar_id: calendar.id), class: "btn btn-danger absentSubmit"
+
 

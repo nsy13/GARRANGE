@@ -67,6 +67,7 @@ class EventsController < ApplicationController
       @inviting_users << User.find_by(id: i_id)
     end
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
+    @calendar = current_user.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
   end
 
   def update
@@ -111,13 +112,20 @@ class EventsController < ApplicationController
   def accept
     current_user.user_events.find_by(event_id: params[:event_id]).update_attributes(accepted: true)
     CalendarEvent.create(calendar_id: params[:calendar_id], event_id: params[:event_id])
-    flash[:success] = "イベントへの招待を承認しました"
+    flash[:success] = "イベントをカレンダーに追加しました"
     redirect_to root_path
   end
 
   def absent
-    current_user.user_events.find_by(event_id: params[:event_id]).delete
-    flash[:warning] = "イベントを欠席しました"
+    user_event = current_user.user_events.find_by(event_id: params[:event_id])
+    if user_event.accepted == true
+      user_event.delete
+      CalendarEvent.find_by(event_id: user_event.event.id, calendar_id: params[:calendar_id]).delete
+      flash[:warning] = "イベントをカレンダーから削除しました"
+    else
+      user_event.delete
+      flash[:warning] = "イベントを欠席しました"
+    end
     redirect_to root_path
   end
 
