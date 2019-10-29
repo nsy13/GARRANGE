@@ -5,4 +5,6 @@ class Event < ApplicationRecord
   has_many :calendars, through: :calendar_events
   validates :title, presence: true, length: { maximum: 50 }
   validates :description, length: { maximum: 300 }
+  validates :start_date, presence: true
+  validates :end_date, presence: true
 end
