@@ -31,8 +31,10 @@
                         - else
                           = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
                         = f.label "calendar-#{calendar.id}", "#{calendar.name}"
-                        - unless current_user?(@user)
-                          = link_to "共有", calendar_access_path(calendar_id: calendar.id)
+                        span.calendarAccess
+                          - unless current_user?(@user)
+                            - unless @accessed_calendars.include?(calendar)
+                              = link_to "共有", calendar_access_path(calendar_id: calendar.id)
             .sidebar__calendarsList--othersCalendars
               a.calendar-collapse data-toggle="collapse" href=".sidebar__calendarsList--othersContentBox" role="button" aria-expanded="false" aria-controls="collapseExample"
                 | 他のカレンダー
