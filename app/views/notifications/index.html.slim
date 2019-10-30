@@ -1,9 +1,13 @@
 .container
-  .notificationTitle
-    p 招待されているイベント一覧
-  .row
-    .notificationBoard.col-md-8.offset-md-2
-      - @notifications.each do |notification|
-        = render "notifications/notification", { notification: notification }
+  - if @notifications.present?
+    .notificationTitle
+      p 招待されているイベント一覧
+    .row
+      .notificationBoard.col-md-8.offset-md-2
+        - @notifications.each do |notification|
+          = render "notifications/notification", { notification: notification }
       = paginate @notifications
+  - else
+    .notificationTitle
+      p 招待されているイベントはありません
   .modalSection
