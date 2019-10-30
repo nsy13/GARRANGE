@@ -3,49 +3,8 @@
     .row
       .col-md-4
         .sidebar
-          .sidebar__profile
-            h2 = @user.name
-          .sidebar__newEvent
-            = form_with url: new_event_path, class: "sidebar__newEvent--form", method: :get do |f|
-              = f.submit "イベントを作成する", class: "btn btn-primary"
-          .sidebar__searchDate
-            = form_with url: date_search_path, method: :get do |f|
-              = f.submit "空き時間を検索する", class: "btn btn-outline-primary"
-          .sidebar__calendarsList
-            .sidebar__calendarsList--myCalendars
-              - if current_user?(@user)
-                a.calendar-collapse data-toggle="collapse" href=".sidebar__calendarsList--myContentBox" role="button" aria-expanded="false" aria-controls="collapseExample"
-                  | マイカレンダー
-                  i.fa.fa-chevron-down
-              - else
-                a.calendar-collapse data-toggle="collapse" href=".sidebar__calendarsList--myContentBox" role="button" aria-expanded="false" aria-controls="collapseExample"
-                  | #{@user.name}さんのカレンダー
-                  i.fa.fa-chevron-down
-              .sidebar__calendarsList--myContentBox.collapse
-                ul
-                  = form_with url: root_path, method: :get, class: "sidebar__calendarsList--form" do |f|
-                    - @my_calendars.each.with_index(1) do |calendar, index|
-                      li.form-group
-                        - if index == 1
-                          = f.check_box "select-calendar", { id: "calendar-#{calendar.id}", checked: true }, calendar.name
-                        - else
-                          = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
-                        = f.label "calendar-#{calendar.id}", "#{calendar.name}"
-                        span.calendarAccess
-                          - unless current_user?(@user)
-                            - unless @accessed_calendars.include?(calendar)
-                              = link_to "共有", calendar_access_path(calendar_id: calendar.id)
-            .sidebar__calendarsList--othersCalendars
-              a.calendar-collapse data-toggle="collapse" href=".sidebar__calendarsList--othersContentBox" role="button" aria-expanded="false" aria-controls="collapseExample"
-                | 他のカレンダー
-                i.fa.fa-chevron-down
-              .sidebar__calendarsList--othersContentBox.collapse
-                ul
-                  = form_with url: root_path, method: :get, class: "sidebar__calendarsList--form" do |f|
-                    - @others_calendars.each.with_index(1) do |calendar, index|
-                      li.form-group
-                        = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
-                        = f.label "calendar-#{calendar.id}", "#{calendar.name}"
+          .sidebar__userInfo
+            = render 'home/index'
           .sidebar__searchUsers.form-group
             = search_form_for @q, url: search_path, remote: true, class: "form-inline  search-form" do |f|
               = f.search_field :name_or_email_cont, class: "form-control search-field", type: "search", placeholder: "ユーザー検索", autocomplete: "off"

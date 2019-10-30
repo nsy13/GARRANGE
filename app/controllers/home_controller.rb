@@ -8,7 +8,7 @@ class HomeController < ApplicationController
       @my_calendars = user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
       @others_calendars = user_calendars.select { |oc| oc.owner == false }.map { |others| others.calendar }
       @accessed_calendars = @others_calendars && UserCalendar.where(user_id: current_user.id).map { |user_calendar| user_calendar.calendar }
-      if current_user.user_events.present?
+      if @user.user_events.present?
         if params[:selected_calendars]
           selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
           if selected_calendars_id.include?(0)
