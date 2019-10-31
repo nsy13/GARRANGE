@@ -1,9 +1,22 @@
-.about {
+.about-top {
   text-align: center;
+  margin: 80px 0 20px 0;
 }
 
-.about-top {
-  margin: 80px 0 20px 0;
+.about-message{
+  text-align: left;
+  margin: 30px 0;
+}
+
+.message-body {
+  font-size: 16px;
+  p {
+    font-size: 18px;
+  }
+  h4 {
+    margin-top: 20px;
+    font-weight: bold;
+  }
 }
 
 .about-logo {
@@ -17,25 +30,47 @@
   margin-bottom: 30px;
 }
 
-.about-features {
-  margin-bottom: 50px;
+.about-feature {
+  margin: 30px 0;
 }
 
 .feature-icon {
-  font-size: 8rem;
+  font-size: 6rem;
   color: #0069d9;
 }
 
 .feature-description {
-  font-size: 18px;
+  text-align: left;
+  font-size: 16px;
+  h4 {
+    font-weight: bold;
+  }
+  p {
+    font-size: 20px;
+    font-weight: bold;
+  }
 }
 
-.signup-message {
+.link-message {
   font-size: 20px;
-  margin-bottom: 20px;
+  margin: 50px 0;
+  text-align: center;
+  form {
+    margin-top: 30px;
+  }
+  a {
+    margin-top: 30px;
+  }
 }
 
 .signup-link {
+  a {
+    font-size: 20px;
+  }
+  margin-bottom: 30px;
+}
+
+.searchDate-link {
   a {
     font-size: 20px;
   }
