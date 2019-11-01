@@ -69,3 +69,22 @@ ul, ol {
   color: #468847;
   text-align: left;
 }
+
+.displayNone {
+	display: none;
+}
+
+.modal-calendar-link {
+	p {
+		font-size: 16px;
+		margin: 15px;
+	}
+	a {
+		margin: 20px 0 30px 20px;
+	}
+}
+
+.searched-users {
+	max-height: 300px;
+	overflow: auto;
+}

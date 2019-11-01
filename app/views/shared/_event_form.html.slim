@@ -49,11 +49,11 @@
         .row.form-group
           .col-md-12
             = text_field_tag "user_name_or_email", "", placeholder: "名前またはメールアドレスで検索", class: "form-control", autocomplete: "off"
-          .col-md-9.searched-users
+          .col-md-12.searched-users
             - unless all_users.blank?
               - all_users.each do |user|
                 div class="searched-user #{user.name} #{user.email} "
-                  - if inviting_users.include?(user)
+                  - if inviting_users.include?(user) && user != current_user
                     = check_box_tag :search_user, user.id, true, { id: "search-user-#{user.id}" }
                   - else
                     = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
