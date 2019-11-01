@@ -38,7 +38,7 @@
                 .login-message.col-md-12
                   p 今すぐ始めてみる
                 .testLogin-link.col-md-12
-                  = link_to "テストユーザーでログイン", "#", class: "btn btn-primary"
+                  = link_to "テストユーザーでログイン", login_path(user: { email: "test@test.com", password: "password"} ), method: :post, class: "btn btn-primary"
                 .divider.line.razor.col-md-12
                 .signin-link.col-md-12
                   = link_to "アカウント作成", signup_path, class: "btn btn-primary"
