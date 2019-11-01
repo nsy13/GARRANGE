@@ -30,7 +30,9 @@ class EventsController < ApplicationController
       @event.calendar_events.create(calendar_id: @calendar.id)
       params[:inviting_users].split(", ").each do |id|
         invited = User.find_by(id: id)
-        UserEvent.create(user_id: invited.id, event_id: @event.id)
+        unless UserEvent.find_by(user_id: invited.id, event_id: @event.id)
+          UserEvent.create(user_id: invited.id, event_id: @event.id)
+        end
       end
       flash[:success] = "イベントを追加しました"
       redirect_to root_path
@@ -67,7 +69,7 @@ class EventsController < ApplicationController
       @inviting_users << User.find_by(id: i_id)
     end
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
-    @calendar = current_user.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
+    @calendar = @organizer.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
   end
 
   def update
