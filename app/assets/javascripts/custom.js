@@ -104,6 +104,7 @@ function modal_eventDetail(){
 
     // 参加フォーム送信
     form_submit('.modal__participateEvent--submit', '.modal__participateEvent--submitDisplayNone')
+    modal_hide();
   });
 };
 
@@ -157,9 +158,14 @@ function invite_user(form){
   });
 };
 
+function modal_hide() {
+  $('.modal__user--link').click(function(){
+    $('span').click();
+  })
+}
+
 function form_submit(formButton, form){
   $(formButton).click(function() {
-    // $('span').click();
     $(form).click();
   });
 };
