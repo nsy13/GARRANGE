@@ -68,7 +68,11 @@ class EventsController < ApplicationController
       @inviting_users << User.find_by(id: i_id)
     end
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
-    @calendar = @organizer.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
+    if current_user.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
+      @calendar = current_user.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
+    else
+      @calendar = @organizer.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
+    end
   end
 
   def update
