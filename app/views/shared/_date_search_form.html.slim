@@ -28,44 +28,35 @@
                               { class: "custom-select datetime-select" }
               | 分のイベントを開催したい
           .row.form-group
-            / .col-md-3
-              / = label_tag "user_name_or_email", "参加メンバー", class: "col-form-label"
-            / .col-md-9
             .col-md-12
               = text_field_tag "user_name_or_email", "", placeholder: "招待するユーザーを検索", class: "form-control", autocomplete: "off"
             .col-md-12.searched-users
               - unless all_users.blank?
                 - all_users.each do |user|
-                  div class="searched-user #{user.name} #{user.email} "
+                  div class="searched-user #{ user.name } #{ user.email }"
                     - if inviting_users.include?(user) && user != current_user
                       = check_box_tag :search_user, user.id, true, { id: "search-user-#{user.id}" }
-                    - else
+                      = label_tag "search-user-#{user.id}", user.name
+                    - elsif user != current_user
                       = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
-                    = label_tag "search-user-#{user.id}", user.name
-                / = text_field_tag "user_name_or_email", "", placeholder: "招待するユーザーを検索", class: "form-control", autocomplete: "off"
-            / .col-md-9.offset-md-3.searched-users
-            /   - unless all_users.blank?
-            /     - all_users.each do |user|
-            /       div class="searched-user #{user.name} #{user.email} "
-            /         - if inviting_users.include?(user) && user != current_user
-            /           = check_box_tag :search_user, user.id, true, { id: "search-user-#{user.id}" }
-            /         - else
-            /           = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
-            /         = label_tag "search-user-#{user.id}", user.name
+                      = label_tag "search-user-#{user.id}", user.name
           .row.form-group
             .col-md-12.displayNone
               = f.submit class: "modal__searchDate--submitDisplayNone"
-      - if candidate_dates.present?
         .modal-body
-          = form_with url: new_event_path, class: "modal__dateToEvent--form", method: :get do |f|
-            = f.hidden_field :event_time, value: event_time
-            - candidate_dates.each do |date|
-              .select-date
-                = f.radio_button :select_date, "#{ date.first }"
-                = f.label "#{ date.first }", "#{l date.first} 〜 #{l date.last}"
-              .displayNone
-                = f.submit class: "modal__dateToEvent--submitDisplayNone"
-
+          .candidate_dates
+            - if candidate_dates.present?
+              p 以下の日程なら全員が集まれそうです
+              = form_with url: new_event_path, class: "modal__dateToEvent--form", method: :get do |f|
+                = f.hidden_field :event_time, value: event_time
+                - candidate_dates.each do |date|
+                  .select-date
+                    = f.radio_button :select_date, required: true
+                    = f.label :select_date, "#{l date.first} 〜 #{l date.last}"
+                  .displayNone
+                    = f.submit class: "modal__dateToEvent--submitDisplayNone"
+            - elsif candidate_dates == []
+              p 指定の期間で全員が揃う候補は無いようです...
       .modal-footer
         button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
         button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を検索する
