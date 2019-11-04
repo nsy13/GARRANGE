@@ -1,0 +1,31 @@
+.no-candidates-info {
+  color: #fff;
+  font-size: 18px;
+}
+
+.candidates-info {
+  color: #fff;
+  font-size: 18px;
+}
+
+.candidate-dates {
+  background-color: #007bff;
+  opacity: 0.8;
+  border-radius: 5px;
+  padding: 10px;
+  color: #fff;
+  input {
+    margin-right: 5px;
+  }
+}
+
+.no-candidate-dates {
+  background-color: #dc3545;
+  opacity: 0.8;
+  border-radius: 5px;
+  padding: 10px;
+  color: #fff;
+  input {
+    margin-right: 5px;
+  }
+}

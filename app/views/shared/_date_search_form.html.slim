@@ -6,6 +6,21 @@
         span aria-hidden="true" &times;
     - if current_user.user_calendars.present?
       .modal-body
+        - if candidate_dates.present?
+          .candidate-dates
+            p.candidates-info イベント開催の候補日が見つかりました
+            = form_with url: new_event_path, class: "modal__dateToEvent--form", method: :get do |f|
+              = f.hidden_field :event_time, value: event_time
+              - candidate_dates.each do |date|
+                .select-date
+                  = f.radio_button :select_date, "#{ date.first }", required: true
+                  = f.label "#{ date.first }", "#{l date.first} 〜 #{l date.last}"
+                .displayNone
+                  = f.submit class: "modal__dateToEvent--submitDisplayNone"
+        - elsif candidate_dates == []
+          .no-candidate-dates
+            p.no-candidates-info 指定の期間に候補は見つかりませんでした
+      .modal-body
         = form_with url: date_search_path, class: "modal__searchDate--form", method: :get do |f|
           = f.hidden_field :event_time, value: event_time
           .row.form-group
@@ -43,25 +58,13 @@
           .row.form-group
             .col-md-12.displayNone
               = f.submit class: "modal__searchDate--submitDisplayNone"
-        .modal-body
-          .candidate_dates
-            - if candidate_dates.present?
-              p 以下の日程なら全員が集まれそうです
-              = form_with url: new_event_path, class: "modal__dateToEvent--form", method: :get do |f|
-                = f.hidden_field :event_time, value: event_time
-                - candidate_dates.each do |date|
-                  .select-date
-                    = f.radio_button :select_date, required: true
-                    = f.label :select_date, "#{l date.first} 〜 #{l date.last}"
-                  .displayNone
-                    = f.submit class: "modal__dateToEvent--submitDisplayNone"
-            - elsif candidate_dates == []
-              p 指定の期間で全員が揃う候補は無いようです...
       .modal-footer
         button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
-        button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を検索する
-        - if candidate_dates.present?
-          button.btn.btn-primary.modal__newEvent--link type="button" この日程でイベントを作成する
+        - if candidate_dates.blank?
+          button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を検索する
+        - elsif candidate_dates.present?
+          button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を再検索する
+          button.btn.btn-primary.modal__newEvent--link type="button" 選択した日程でイベントを作成する
     - else
       .modal-body
         .modal-calendar-link
