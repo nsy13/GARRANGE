@@ -10,12 +10,6 @@ Rails.application.routes.draw do
   get '/events/date/search',  to: 'events#date_search', as: 'date_search'
   get '/users/:user_id',      to: 'home#index'
   get 'search',               to: 'home#search_user'
-  # get 'gcals/get_google_calendar_event', to: 'gcals#get_google_calendar_event'
-  # get '/gcal/redirect', to: 'gcals#redirect'
-  # get '/gcal/callback', to: 'gcals#callback'
-  # get '/calendars', to: 'gcals#calendars', as: 'calendars'
-  # get '/events/:calendar_id', to: 'gcals#events', as: 'events', calendar_id: /[^\/]+/
-  # post '/events/:calendar_id', to: 'gcals#new_event', as: 'new_event', calendar_id: /[^\/]+/
   resources :events
   resources :calendars, only: [:new, :create, :edit, :update, :destroy]
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'registrations' }
