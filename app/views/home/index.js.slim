@@ -1,2 +1,2 @@
-| $(".fullcalendar").html("#{ escape_javascript(render 'shared/fullcalendar') }");
+| $(".fullcalendar").html("#{ escape_javascript(render 'shared/fullcalendar', { user: @user, my_calendars: @my_calendars, others_calendars: @others_calendars, accessed_calendars: @accessed_calendars }) }");
 | $(document).ready(function() { full_calendar('#{ request.url.split('/').last}');});
