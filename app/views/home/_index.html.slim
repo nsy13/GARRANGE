@@ -1,4 +1,5 @@
 .sidebar__profile
+  = hidden_field_tag "user_id", @user.id
   h2 = @user.name
 .sidebar__newEvent
   = form_with url: new_event_path, class: "sidebar__newEvent--form", method: :get do |f|

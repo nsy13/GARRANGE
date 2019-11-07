@@ -1,10 +1,11 @@
 $(document).ready(function() {
-  full_calendar();
+  var user_id = $('input[name="user_id"]').val();
+  full_calendar("?user_id=" + user_id);
 });
 
-function full_calendar(url = '/home/index.json') {
+function full_calendar(url = "") {
   $('#calendar').fullCalendar({
-    events: url,
+    events: '/home/index.json' + url,
     header: {
       left: 'prev, next, today',
       center: 'title',
