@@ -4,6 +4,6 @@
 | $('.modalSection').prepend('<div class="modalSection__eventDetail modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
 | $('.modalSection').prepend('<div class="modalSection__eventForm modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
 | $('.modalSection').prepend('<div class="modalSection__searchDate modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>');
-| $('.modalSection__eventForm').html("#{escape_javascript(render 'shared/event_form', { event: @event, all_users: @all_users, inviting_users: @inviting_users }) }");
+| $('.modalSection__eventForm').html("#{escape_javascript(render 'shared/event_form', { event: @event, all_users: @all_users, inviting_users: @inviting_users, my_calendars: @my_calendars, calendar: @calendar }) }");
 | modal_newEvent();
 | $('.modalSection__eventForm').modal("show")
