@@ -35,7 +35,7 @@ end
 
 20.times do |n|
   User.create!(name: Faker::Name.name,
-               email: Faker::Internet.email,
+               email: "#{n}_#{Faker::Internet.email}",
                password: "password")
   Calendar.create!(name: "#{User.find(n + 2).name}のカレンダー", color: Faker::Color.hex_color)
   UserCalendar.create!(user_id: n + 2, calendar_id: n + 3, owner: true)
