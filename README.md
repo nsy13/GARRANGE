@@ -1,24 +1,50 @@
-# README
+# GArrange
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+複数人でのスケジューリングを支援する
+カレンダーアプリケーションです。
+https://garrange.herokuapp.com/
 
-Things you may want to cover:
+## 使用した技術
 
-* Ruby version
+- デプロイ
+    - heroku
+- テスト
+    - RSpec
+- カレンダー
+    - fullcalendar-rails
+- 検索
+    - ransack
+- 通知機能
+- ユーザー認証
+    - Devise
+    - Googleログイン
+    - Facebookログイン
+- DB
+    - PostgreSQL
+- ページネーション
+    - kaminari
+- デザイン
+    - bootstrap
+    - font-awesome-rails
+- 非同期通信
 
-* System dependencies
+## 概要
 
-* Configuration
+スケジュール管理のためのアプリケーションは数多くありますが、
+会議等を設定する際には、数人のスケジュールの空きを一人ずつ確認する必要がありました。
+GArrangeはそんな無駄な時間を削減したいという思いから生まれた、
+複数人のスケジューリングを支援するサービスです。
 
-* Database creation
+## 機能
 
-* Database initialization
+- カレンダーの作成
+- イベントの作成と参加者の招待
+- 空き時間の検索
+- カレンダーの共有
+- ユーザー検索
+- 招待通知機能
 
-* How to run the test suite
+## Requirement
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ruby 2.5.6
+rails 5.2.3
