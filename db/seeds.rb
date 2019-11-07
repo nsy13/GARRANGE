@@ -11,7 +11,7 @@ end
 
 20.times do |n|
   start_date = Date.today + rand(1..20).days + rand(1..12).hours
-  Event.create!(title: "Meeting about #{ Faker::Company.buzzword }",
+  Event.create!(title: "Meeting about #{Faker::Company.buzzword}",
                 description: Faker::ChuckNorris.fact,
                 start_date: start_date,
                 end_date: (start_date.to_time + rand(1..72).hours).to_s,
@@ -44,7 +44,7 @@ end
 100.times do |n|
   user_id = rand(2..21)
   start_date = Date.today + rand(1..20).days + rand(1..12).hours
-  Event.create!(title: "Meeting about #{ Faker::Company.buzzword }",
+  Event.create!(title: "Meeting about #{Faker::Company.buzzword}",
                 description: Faker::ChuckNorris.fact,
                 start_date: start_date,
                 end_date: (start_date.to_time + rand(1..72).hours).to_s,

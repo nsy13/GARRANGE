@@ -68,10 +68,10 @@ class EventsController < ApplicationController
       @inviting_users << User.find_by(id: i_id)
     end
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
-    if current_user.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
-      @calendar = current_user.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
+    if find_calendar(current_user, @event)
+      @calendar = find_calendar(current_user, @event)
     else
-      @calendar = @organizer.calendars.select { |calendar| calendar.calendar_events.where(event_id: @event.id, calendar_id: calendar.id).present? }[0]
+      @calendar = find_calendar(@organizer, @event)
     end
   end
 
@@ -165,6 +165,10 @@ class EventsController < ApplicationController
   def include_slot?(event, slot)
     event_time = (event.start_date + 1.minute)..(event.end_date - 1.minute)
     event_time.overlaps?(slot)
+  end
+
+  def find_calendar(user, event)
+    user.calendars.select { |cal| cal.calendar_events.where(event_id: event.id, calendar_id: cal.id).present? }[0]
   end
 
   private
