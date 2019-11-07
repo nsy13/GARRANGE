@@ -43,6 +43,13 @@ class CalendarsController < ApplicationController
     redirect_to root_path
   end
 
+  def setting
+    @new_calendar = Calendar.new
+    user_calendars = current_user.user_calendars
+    @my_calendars = user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
+    @calendar = @my_calendars.first
+  end
+
   private
 
   def calendar_params

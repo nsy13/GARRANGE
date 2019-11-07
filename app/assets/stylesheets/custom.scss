@@ -1,38 +1,90 @@
-@import "bootstrap";
-
-// home page
-
-ul {
-  list-style: none;
+body {
+	margin: 0;
+	height: 100%;
+	font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  color: #384452;
 }
 
-.event-title {
-  height: 200px;
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 700;
 }
 
-// event-form modal
-.datetime-select {
-  width: auto;
+p {
+	padding: 0;
+	margin-bottom: 12px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 24px;
+	margin-top: 10px;
 }
 
-// event-detail modal
-.no-border {
-  border: 0;
-  border-bottom: solid 1px rgb(199, 199, 199);
-  border-radius: 0;
+img {
+	height: auto;
+	max-width: 100%;
 }
 
-.no-info {
-  color: rgb(199, 199, 199);
+a {
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+	-webkit-transition: background-color .4s linear, color .4s linear;
+	-moz-transition: background-color .4s linear, color .4s linear;
+	-o-transition: background-color .4s linear, color .4s linear;
+	-ms-transition: background-color .4s linear, color .4s linear;
+	transition: background-color .4s linear, color .4s linear;
 }
 
-.absentSubmit {
-  a {
-    text-decoration: none;
-    color: #fff;
-  }
+ul, ol {
+	list-style: none;
+}
+
+// flash message
+.alert-error {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48;
+  text-align: left;
+}
+
+.alert-alert {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48;
+  text-align: left;
+}
+
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
+  text-align: left;
+}
+
+.alert-notice {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
+  text-align: left;
 }
 
 .displayNone {
-  display: none;
+	display: none;
+}
+
+.modal-calendar-link {
+	p {
+		font-size: 16px;
+		margin: 15px;
+	}
+	a {
+		margin: 20px 0 30px 20px;
+	}
+}
+
+.searched-users {
+	max-height: 300px;
+	overflow: auto;
 }

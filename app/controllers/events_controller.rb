@@ -7,7 +7,7 @@ class EventsController < ApplicationController
     if params[:event_time]
       @event.start_date = params[:select_date].to_time
       @event.end_date = @event.start_date + params[:event_time].to_i.seconds
-      params[:inviting_users].split(", ").each do |id|
+      params[:inviting_users].split(",").each do |id|
         invited = User.find_by(id: id)
         @inviting_users << invited
       end
@@ -30,7 +30,9 @@ class EventsController < ApplicationController
       @event.calendar_events.create(calendar_id: @calendar.id)
       params[:inviting_users].split(", ").each do |id|
         invited = User.find_by(id: id)
-        UserEvent.create(user_id: invited.id, event_id: @event.id)
+        unless UserEvent.find_by(user_id: invited.id, event_id: @event.id)
+          UserEvent.create(user_id: invited.id, event_id: @event.id)
+        end
       end
       flash[:success] = "イベントを追加しました"
       redirect_to root_path
@@ -53,7 +55,6 @@ class EventsController < ApplicationController
   end
 
   def show
-    # FIXME: participantsが存在しない場合にバグ
     @event = Event.find(params[:id])
     @organizer = User.find_by(id: @event.organizer_id)
     @participants = []
@@ -67,6 +68,11 @@ class EventsController < ApplicationController
       @inviting_users << User.find_by(id: i_id)
     end
     @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
+    if find_calendar(current_user, @event)
+      @calendar = find_calendar(current_user, @event)
+    else
+      @calendar = find_calendar(@organizer, @event)
+    end
   end
 
   def update
@@ -111,30 +117,30 @@ class EventsController < ApplicationController
   def accept
     current_user.user_events.find_by(event_id: params[:event_id]).update_attributes(accepted: true)
     CalendarEvent.create(calendar_id: params[:calendar_id], event_id: params[:event_id])
-    flash[:success] = "イベントへの招待を承認しました"
+    flash[:success] = "イベントをカレンダーに追加しました"
     redirect_to root_path
   end
 
   def absent
-    current_user.user_events.find_by(event_id: params[:event_id]).delete
-    flash[:warning] = "イベントを欠席しました"
+    user_event = current_user.user_events.find_by(event_id: params[:event_id])
+    if user_event.accepted == true
+      user_event.delete
+      CalendarEvent.find_by(event_id: user_event.event.id, calendar_id: params[:calendar_id]).delete
+      flash[:warning] = "イベントをカレンダーから削除しました"
+    else
+      user_event.delete
+      flash[:warning] = "イベントを欠席しました"
+    end
     redirect_to root_path
   end
 
   def date_search
     @event = Event.new
-    @my_calendars = current_user.user_calendars.select { |uc| uc.owner == true }.map { |owner| owner.calendar }
     @all_users = User.all
     @inviting_users = []
     @event_time = 1800
-    if params[:selected_calendars]
-      selected_calendars_id = params[:selected_calendars].split(',').map { |cal| cal.slice(/[0-9].*/).to_i }
-      @calendar = Calendar.find_by(id: selected_calendars_id[0])
-    else
-      @calendar = @my_calendars.first
-    end
     if params[:inviting_users]
-      params[:inviting_users].split(", ").each do |id|
+      params[:inviting_users].split(",").each do |id|
         invited = User.find_by(id: id)
         @inviting_users << invited
       end
@@ -159,6 +165,10 @@ class EventsController < ApplicationController
   def include_slot?(event, slot)
     event_time = (event.start_date + 1.minute)..(event.end_date - 1.minute)
     event_time.overlaps?(slot)
+  end
+
+  def find_calendar(user, event)
+    user.calendars.select { |cal| cal.calendar_events.where(event_id: event.id, calendar_id: cal.id).present? }[0]
   end
 
   private

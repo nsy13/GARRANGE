@@ -8,6 +8,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i(facebook google_oauth2)
+  validates :name, presence: true, length: { maximum: 50 }
 
   def self.find_oauth(auth)
     uid = auth.uid

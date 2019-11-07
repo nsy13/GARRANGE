@@ -1,0 +1,17 @@
+.container
+  .row
+    .col-md-3
+      .nav.flex-column.nav-pills#v-pills-tab role="tablist" aria-orientation="vertical"
+        a.nav-link.active#v-pills-newCalendar-tab data-toggle="pill" href="#v-pills-newCalendar" role="tab" aria-controls="v-pills-newCalendar" aria-selected="true"
+          | カレンダーの作成
+        - if @calendar.present?
+          a.nav-link#v-pills-editCalendar-tab data-toggle="pill" href="#v-pills-editCalendar" role="tab" aria-controls="v-pills-editCalendar" aria-selected="false"
+            | カレンダーの編集
+    .col-md-9
+      .tab-content#v-pills-tabContent
+        .tab-pane.fade.show.active#v-pills-newCalendar role="tabpanel" aria-labelledby="v-pills-newCalendar-tab"
+          = render "shared/calendar_form", { calendar: @new_calendar }
+        - if @calendar.present?
+          .tab-pane.fade#v-pills-editCalendar role="tabpanel" aria-labelledby="v-pills-editCalendar-tab"
+            #calendar-edit
+              = render "shared/calendar_edit", { calendar: @calendar, calendars: @my_calendars }

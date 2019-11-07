@@ -1,0 +1,25 @@
+nav.navbar.navbar-fixed-top.navbar-expand-md.navbar-dark.bg-dark.navbar-custom
+  .container
+    = link_to 'GArrange', root_path, class: 'navbar-brand'
+    button.navbar-toggler data-target="#navbar-content" data-toggle="collapse" type="button"
+      span.navbar-toggler-icon
+    #navbar-content.collapse.navbar-collapse
+      ul.navbar-nav.ml-auto
+        - if user_signed_in?
+          li.nav-item
+            = link_to "通知", notifications_index_path, class: "nav-link"
+          li.nav-item.dropdown
+            a#navbarDropdown.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button"
+              = current_user.name
+            .dropdown-menu aria-labelledby="navbarDropdown"
+              = link_to "ユーザー設定", setting_profile_path, class: 'nav-link'
+              = link_to "カレンダー設定", setting_calendar_path, class: 'nav-link'
+              .dropdown-divider
+              = link_to "ログアウト", logout_path, method: :delete, class: 'nav-link'
+        - else
+          li.nav-item
+            = link_to "GArrangeとは", about_path, class: 'nav-link'
+          li.nav-item
+            = link_to "新規ユーザー登録", signup_path, class: 'nav-link'
+          li.nav-item
+            = link_to "ログイン", login_path, class: 'nav-link'

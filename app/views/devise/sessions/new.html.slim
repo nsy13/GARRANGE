@@ -1,0 +1,34 @@
+.loginLayout
+  .container
+    .row
+      .col-md-6.offset-md-3
+        .loginBody
+          .mail-login
+            h2.login-title Login
+            hr
+            p.lead メールアドレスでログイン
+            = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+              = devise_error_messages!
+              .form-group
+                = f.email_field :email, placeholder: "メールアドレス", class: "form-control", required: true
+              .form-group
+                = f.password_field :password, placeholder: "パスワード", class: "form-control", required: true
+              - if devise_mapping.rememberable?
+                .remember-me
+                  = f.check_box :remember_me
+                  = f.label :remember_me, "ログインしたままにする"
+              .actions
+                = f.submit "ログイン", class: "btn btn-primary"
+            hr
+          .sns-login
+            p.lead メールアドレス以外でログイン
+            .facebook-login
+              = link_to user_facebook_omniauth_authorize_path, class: "facebook-link" do
+                i.fa.fa-facebook
+                | Facebookアカウントでログイン
+            .google-login
+              = link_to user_google_oauth2_omniauth_authorize_path, class: "google-link" do
+                i.fa.fa-google
+                | Googleアカウントでログイン
+          .login-link
+            = link_to "アカウントをお持ちでない方はこちら", signup_path

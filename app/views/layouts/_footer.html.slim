@@ -1,0 +1,20 @@
+.footer
+  .container
+    .row
+      .col-md-4.footer-left
+        .footer-logo GArrange
+      .col-md-4.footer-center
+        .copy-right
+          | &copy; 2019 Shuhei Yoshino
+        .twitter-link
+          = link_to "https://twitter.com/developer_ysn", class: "twitter" do
+            i.fa.fa-twitter
+        .github-link
+          = link_to "https://github.com/ShuheiYoshino", class: "github" do
+            i.fa.fa-github
+      .col-md-4.text-right.footer-right
+        ul
+          li.footer-item
+            = link_to "HOME", root_path
+          li.footer-item
+            = link_to "GArrangeとは", about_path

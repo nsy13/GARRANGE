@@ -1,2 +1,3 @@
 | $(".fullcalendar").html("#{ escape_javascript(render 'shared/fullcalendar') }");
+| $(".sidebar__userInfo").html("#{ escape_javascript(render 'home/index') }");
 | $(document).ready(function() { full_calendar('/home/index#{ request.url.split('/').last}.json');});

@@ -1,14 +1,14 @@
-招待中のイベントは
-- @invited_events.each do |invited|
-  .invited-events
-    = l invited.start_date
-    = l invited.end_date
-    = invited.title
-    .notification-detail = link_to "詳細を見る", event_path(id: invited.id), remote: true
-= link_to "ホームへ戻る", root_path
-.modalSection
-  .modalSection__eventDetail.modal.fade tabindex="-1" role="dialog" aria-hidden="true"
-
-
-  / = "#{l invited.start_date}"から"#{l invited.end_date}"まで開催予定の
-  / = "#{invited.title}"です。
+.container
+  - if @notifications.present?
+    .notificationTitle
+      p 招待されているイベント一覧
+    .row
+      .notificationBoard.col-md-8.offset-md-2
+        - @notifications.each do |notification|
+          = render "notifications/notification", { notification: notification }
+      .pagenate
+        = paginate @notifications
+  - else
+    .notificationTitle
+      p 招待されているイベントはありません
+  .modalSection

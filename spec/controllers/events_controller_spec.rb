@@ -37,8 +37,11 @@ RSpec.describe EventsController, type: :controller do
     it "assigns @inviting_users" do
       expect(assigns(:inviting_users)).to eq [user3]
     end
-    it "assigns @calendars" do
-      expect(assigns(:calendars)).to eq [calendar]
+    it "assigns @my_calendars" do
+      expect(assigns(:my_calendars)).to eq [calendar]
+    end
+    it "assigns @calendar" do
+      expect(assigns(:calendar)).to eq calendar
     end
     it "render correct template" do
       expect(response).to render_template(:show)

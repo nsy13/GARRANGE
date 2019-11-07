@@ -1,51 +1,46 @@
 - if user_signed_in?
-  .row
-    .col-sm-4
-      .sidebar
-        .sidebar__profile
-          h2 = @user.name
-        .sidebar__calendarsList
-          .sidebar__calendarsList--myCalendars
-            - if current_user?(@user)
-              h5 自分のカレンダー
-            - else
-              h5 #{@user.name}さんのカレンダー
-            = form_with url: root_path, method: :get, class: "sidebar__calendarsList--form" do |f|
-              - @my_calendars.each.with_index(1) do |calendar, index|
-                .form-group
-                  - if index == 1
-                    = f.check_box "select-calendar", { id: "calendar-#{calendar.id}", checked: true }, calendar.name
-                  - else
-                    = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
-                  = f.label "calendar-#{calendar.id}", "#{calendar.name}"
-                  - unless current_user?(@user)
-                    = link_to "共有", calendar_access_path(calendar_id: calendar.id)
-          .sidebar__calendarsList--othersCalendars
-            h5 共有中のカレンダー
-            = form_with url: root_path, method: :get, class: "sidebar__calendarsList--form" do |f|
-              - @others_calendars.each.with_index(1) do |calendar, index|
-                .form-group
-                  = f.check_box "select-calendar", { id: "calendar-#{calendar.id}" }, calendar.name
-                  = f.label "calendar-#{calendar.id}", "#{calendar.name}"
-        .sidebar__searchUsers.form-group
-          h5 ユーザーを探す
-          = search_form_for @q, url: search_path, remote: true do |f|
-            = f.label :name_or_email_cont
-            = f.search_field :name_or_email_cont, class: "form-control", type: "search", placeholder: "名前、またはメールアドレスで検索", autocomplete: "off"
-            = f.submit "検索", class: "btn btn-outline-success"
-          .sidebar__searchUsers--list
-            = render "shared/searched_users", { searched_users: @searched_users }
-      .sidebar__newEvent
-        = form_with url: new_event_path, class: "sidebar__newEvent--form", method: :get do |f|
-          = f.submit "イベントを作成する", class: "btn btn-primary"
-      .sidebar__searchDate
-        = form_with url: date_search_path, method: :get do |f|
-          = f.submit "空き時間を検索する", class: "btn btn-outline-primary"
-    .col-sm-8
-      .calendar
-        .calendar__body.fullcalendar
-          = render 'shared/fullcalendar'
-    .modalSection
+  .index.container
+    .row
+      .col-md-4
+        .sidebar
+          .sidebar__userInfo
+            = render 'home/index'
+          .sidebar__searchUsers.form-group
+            = search_form_for @q, url: search_path, remote: true, class: "form-inline  search-form" do |f|
+              = f.search_field :name_or_email_cont, class: "form-control search-field", type: "search", placeholder: "ユーザー検索", autocomplete: "off"
+              = button_tag type: "submit", class: "search-button" do
+                i.fa.fa-search
+            .sidebar__searchUsers--list
+              = render "shared/searched_users", { searched_users: @searched_users }
+      .col-md-8
+        .calendar
+          .calendar__body.fullcalendar
+            = render 'shared/fullcalendar'
+      .modalSection
 - else
-  = link_to "新規登録", new_user_registration_path
-  = link_to "ログイン", login_path
+  .top
+    .top-body.container-fluid
+      .row
+        .top-left.col-md-6
+          .bg-image
+            .bg-mask
+              .container
+                .row
+                  .col-md-10.offset-md-1
+                    .top-logo
+                      h1 GArrange
+                    .top-left-text
+                      p 忙しいチームの日程調整を支援するサービスです
+        .top-right.col-md-6
+          .container
+            .row
+              .top-login-link.col-md-8.offset-md-2.row
+                .login-message.col-md-12
+                  p 今すぐ始めてみる
+                .testLogin-link.col-md-12
+                  = link_to "テストユーザーでログイン", login_path(user: { email: "test@test.com", password: "password"} ), method: :post, class: "btn btn-primary"
+                .divider.line.razor.col-md-12
+                .signin-link.col-md-12
+                  = link_to "アカウント作成", signup_path, class: "btn btn-primary"
+                .login-link.col-md-12
+                  = link_to "ログイン", login_path, class: "btn btn-outline-primary"

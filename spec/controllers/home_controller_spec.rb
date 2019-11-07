@@ -89,24 +89,5 @@ RSpec.describe HomeController, type: :controller do
         expect(response).to render_template(:index)
       end
     end
-
-    context "when visit settings page" do
-      before do
-        get :settings
-      end
-
-      it "returns http success" do
-        expect(response).to have_http_status(:success)
-      end
-      it "assigns @my_calendars" do
-        expect(assigns(:my_calendars)).to eq calendars[0..1]
-      end
-      it "assigns @calendar" do
-        expect(assigns(:calendar)).to eq calendars[0]
-      end
-      it "render correct template" do
-        expect(response).to render_template(:settings)
-      end
-    end
   end
 end

@@ -4,55 +4,69 @@
       h5.modal-title 空き時間を検索する
       button.close type="button" data-dismiss="modal" aria-label="Close"
         span aria-hidden="true" &times;
-    .modal-body
-      = form_with url: date_search_path, class: "modal__searchDate--form", method: :get do |f|
-        = f.hidden_field :event_time, value: event_time
-        .row.form-group
-          .col-md-10
-            = f.text_field :start_date, class: "form-control datetimepicker-input", id: "start_date_picker", data: {toggle: "datetimepicker", target: "#start_date_picker" }, autocomplete: "off"
-            | から
-            = f.text_field :end_date, class: "form-control datetimepicker-input", id: "end_date_picker", data: {toggle: "datetimepicker", target: "#end_date_picker" }, autocomplete: "off"
-            | までに
-        .row.form-group
-          .col-md-6
-            = f.time_select :event_time,
-                            { minute_step: 30,
-                              time_separator: '時間',
-                              default: Date.today + event_time.seconds,
-                              start_hour: 0,
-                              end_hour: 8 },
-                            { class: "custom-select datetime-select" }
-            | 分のイベントを開催したい
-        .row.form-group
-          .col-md-3
-            = label_tag "user_name_or_email", "参加メンバー", class: "col-form-label"
-          .col-md-9
-            = text_field_tag "user_name_or_email", "", placeholder: "名前またはメールアドレスで検索", class: "form-control", autocomplete: "off"
-          .col-md-9.offset-md-3.searched-users
-            - unless all_users.blank?
-              - all_users.each do |user|
-                div class="searched-user #{user.name} #{user.email} "
-                  - if inviting_users.include?(user) && user != current_user
-                    = check_box_tag :search_user, user.id, true, { id: "search-user-#{user.id}" }
-                  - else
-                    = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
-                  = label_tag "search-user-#{user.id}", user.name
-        .row.form-group
-          .col-md-12.displayNone
-            = f.submit class: "modal__searchDate--submitDisplayNone"
-    - if candidate_dates.present?
+    - if current_user.user_calendars.present?
       .modal-body
-        = form_with url: new_event_path, class: "modal__dateToEvent--form", method: :get do |f|
+        - if candidate_dates.present?
+          .candidate-dates
+            p.candidates-info イベント開催の候補日が見つかりました
+            = form_with url: new_event_path, class: "modal__dateToEvent--form", method: :get do |f|
+              = f.hidden_field :event_time, value: event_time
+              - candidate_dates.each do |date|
+                .select-date
+                  = f.radio_button :select_date, "#{ date.first }", required: true
+                  = f.label "#{ date.first }", "#{l date.first} 〜 #{l date.last}"
+                .displayNone
+                  = f.submit class: "modal__dateToEvent--submitDisplayNone"
+        - elsif candidate_dates == []
+          .no-candidate-dates
+            p.no-candidates-info 指定の期間に候補は見つかりませんでした
+      .modal-body
+        = form_with url: date_search_path, class: "modal__searchDate--form", method: :get do |f|
           = f.hidden_field :event_time, value: event_time
-          - candidate_dates.each do |date|
-            .select-date
-              = f.radio_button :select_date, "#{ date.first }"
-              = f.label "#{ date.first }", "#{l date.first} 〜 #{l date.last}"
-            .displayNone
-              = f.submit class: "modal__dateToEvent--submitDisplayNone"
-
-    .modal-footer
-      button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
-      button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を検索する
-      - if candidate_dates.present?
-        button.btn.btn-primary.modal__newEvent--link type="button" この日程でイベントを作成する
+          .row.form-group
+            .col-md-4
+              = f.text_field :start_date, class: "form-control datetimepicker-input", id: "start_date_picker", data: {toggle: "datetimepicker", target: "#start_date_picker" }, placeholder: "いつ", autocomplete: "off"
+            .col-md-1
+              | から
+            .col-md-4
+              = f.text_field :end_date, class: "form-control datetimepicker-input", id: "end_date_picker", data: {toggle: "datetimepicker", target: "#end_date_picker" }, placeholder: "いつ", autocomplete: "off"
+            .col-md-2
+              | のあいだに
+          .row.form-group
+            .col-md-4.time-select
+              = f.time_select :event_time,
+                              { minute_step: 30,
+                                time_separator: '時間',
+                                default: Date.today + event_time.seconds,
+                                start_hour: 0,
+                                end_hour: 8 },
+                              { class: "custom-select datetime-select" }
+              | 分のイベントを開催したい
+          .row.form-group
+            .col-md-12
+              = text_field_tag "user_name_or_email", "", placeholder: "招待するユーザーを検索", class: "form-control", autocomplete: "off"
+            .col-md-12.searched-users
+              - unless all_users.blank?
+                - all_users.each do |user|
+                  div class="searched-user #{ user.name } #{ user.email }"
+                    - if inviting_users.include?(user) && user != current_user
+                      = check_box_tag :search_user, user.id, true, { id: "search-user-#{user.id}" }
+                      = label_tag "search-user-#{user.id}", user.name
+                    - elsif user != current_user
+                      = check_box_tag :search_user, user.id, false, { id: "search-user-#{user.id}" }
+                      = label_tag "search-user-#{user.id}", user.name
+          .row.form-group
+            .col-md-12.displayNone
+              = f.submit class: "modal__searchDate--submitDisplayNone"
+      .modal-footer
+        button.btn.btn-secondary type="button" data-dismiss="modal" キャンセル
+        - if candidate_dates.blank?
+          button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を検索する
+        - elsif candidate_dates.present?
+          button.btn.btn-outline-primary.modal__searchDate--submit type="button" 空き時間を再検索する
+          button.btn.btn-primary.modal__newEvent--link type="button" 選択した日程でイベントを作成する
+    - else
+      .modal-body
+        .modal-calendar-link
+          p.modal-title 先にカレンダーを作成してください
+          = link_to "カレンダー作成画面へ", setting_calendar_path, class: "btn btn-primary"

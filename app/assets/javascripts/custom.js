@@ -1,5 +1,10 @@
+// flashメッセージ
+$(function(){
+  setTimeout("$('.flash').fadeOut('slow')", 3000)
+})
+
 // Topページ
-jQuery(document).ready(function() {
+$(document).ready(function() {
   // 選択したカレンダーに登録されたイベントを表示
 	$('input[name="select-calendar"]').change(function() {
     $('input[name="selected_calendars"]').remove();
@@ -16,6 +21,19 @@ jQuery(document).ready(function() {
     Rails.fire($('.sidebar__calendarsList--form')[0], 'submit');
 	});
 });
+
+$(document).ready(function(){
+  // カレンダー展開リンクを踏んだ際のアイコン変更
+  $('.calendar-collapse').on('click', function(){
+    if($(this).attr('aria-expanded') === 'true'){
+      $(this).find('i').removeClass('fa-chevron-up');
+      $(this).find('i').addClass('fa-chevron-down');
+    } else {
+      $(this).find('i').removeClass('fa-chevron-down');
+      $(this).find('i').addClass('fa-chevron-up');
+    }
+  })
+})
 
 // カレンダー編集画面
 $(document).ready(function() {
@@ -86,6 +104,7 @@ function modal_eventDetail(){
 
     // 参加フォーム送信
     form_submit('.modal__participateEvent--submit', '.modal__participateEvent--submitDisplayNone')
+    modal_hide();
   });
 };
 
@@ -139,9 +158,14 @@ function invite_user(form){
   });
 };
 
+function modal_hide() {
+  $('.modal__user--link').click(function(){
+    $('span').click();
+  })
+}
+
 function form_submit(formButton, form){
   $(formButton).click(function() {
-    // $('span').click();
     $(form).click();
   });
 };

@@ -1,18 +1,14 @@
-.modal-dialog.modal-lg
-  .modal-content
-    = form_with model: calendar, local:true do |f|
-      .modal-header
-        h5.modal-title カレンダーを作成する
-      .modal-body
-        .row.form-group
-          .col-md-8.offset-md-2
-            = f.label :name, "カレンダー名を設定する", class: "col-form-label"
-          .col-md-8.offset-md-2
-            = f.text_field :name, class: "form-control", placeholder: "必須項目", required: true
-        .row.form-group
-          .col-md-4.offset-md-2
-            = f.label :color, "カレンダーに色を設定する", class: "col-form-label"
-          .col-md-2
-            = f.color_field :color, class: "form-control"
-      .modal-footer
-        = f.submit class: "btn btn-primary"
+.calendarCreateLayout
+  .container
+    .row
+      .col-md-12
+        .calendarCreateBody
+          .calendarCreate-form
+            p.calendarCreate-title カレンダー新規作成
+            hr
+            = form_with model: calendar, local:true, id: "calendar-create-form" do |f|
+              .form-group
+                = f.label :name, "カレンダー名を設定する", class: "col-form-label"
+                = f.text_field :name, class: "form-control", placeholder: "必須項目", required: true
+              .actions
+                = f.submit "作成する", class: "btn btn-primary"

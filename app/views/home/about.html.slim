@@ -1,0 +1,43 @@
+.about
+  .container
+    .row
+      .about-top.col-md-12
+        h2.about-logo GArrange
+        .about-description チームのスケジューリングをもっと簡単に
+      .about-message.col-md-12.row
+        .image.col-md-2.offset-md-2
+          = image_tag 'worrying-person.png'
+        .message-body.col-md-8
+          p こんな経験ありませんか？
+          | ・チームミーティングを開きたいけど、全員集まれる日程がわからない・・・<br>
+          | ・大勢が集まる会議を開催する日時が決められない・・・<br>
+          | ・予定していたイベントを忘れられてしまって全員揃わない・・・
+          h4 GArrangeはそんな悩みを解決します！
+      .about-feature.col-md-12.row
+        .feature-icon.col-md-2.offset-md-2
+          = fa_icon "calendar"
+        .feature-description.col-md-8
+          h4 Point !
+          p イベントにユーザーを招待できる
+          | 参加してほしいユーザーをイベントに招待して<br>
+          | 参加表明した方のカレンダーにもイベントを登録します<br>
+          | もちろん、一度参加を決定したイベントの欠席処理も行えます
+      .about-feature.col-md-12.row
+        .feature-icon.col-md-2.offset-md-2
+          = fa_icon "users"
+        .feature-description.col-md-8
+          h4 Point !
+          p ユーザー間で共通の空き時間が検索可能
+          | 複数人のイベントを作成するとき、共通する空き時間を探すのは面倒だし大変ですよね？<br>
+          | GArrangeは指定したメンバーの空き時間の中から共通する時間を候補として提案するので<br>
+          | 全員が参加できる時間を簡単に見つけることができます
+      .link-message.col-md-12
+        | まずは試してみましょう
+        - if user_signed_in?
+          .searchDate-link.col-md-12
+            = form_with url: date_search_path, method: :get do |f|
+              = f.submit "空き時間を検索する", class: "btn btn-outline-primary"
+        - else
+          .signup-link.col-md-12
+            = link_to "新規ユーザー登録", signup_path, class: "btn btn-primary"
+      .modalSection

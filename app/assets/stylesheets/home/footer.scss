@@ -1,0 +1,57 @@
+.footer {
+  width: 100%;
+  height: 50px;
+  padding: 15px 0;
+  box-shadow: 0 -3px 3px -3px rgba(0, 0, 0, 0.2);
+  background-color: white;
+}
+.footer-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #666666;
+}
+.footer-center {
+  line-height: 20px;
+  text-align: center;
+  float: left;
+  .copy-right {
+    display: inline-block;
+  }
+  .twitter-link {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 1.3rem;
+  }
+  .github-link {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 1.3rem;
+    }
+}
+.footer-left {
+  float: left;
+}
+.footer-right {
+  float: right;
+}
+.footer-item {
+  display: inline-block;
+  margin-left: 10px;
+  a {
+    font-size: 14px;
+    color: #666666;
+    &:hover {
+      text-decoration: none;
+      color: #007bff;
+    }
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+footer {
+  margin-top: auto;
+}

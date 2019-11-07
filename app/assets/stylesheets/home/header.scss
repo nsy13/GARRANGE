@@ -1,0 +1,31 @@
+.navbar-custom {
+  letter-spacing: 2px;
+  .navbar-brand {
+    color: #fff;
+    font-weight: bold;
+  }
+  .nav-item {
+    .nav-link {
+      font-size:  14px;
+      color: #fff;
+      &:hover {
+        outline: 0;
+        color: #007bff;
+        background-color: transparent;
+      }
+    }
+  }
+}
+.navbar-nav {
+  align-items: center;
+}
+.nav-item {
+  .dropdown-menu {
+    background-color: #343a40;
+  }
+}
+@media(max-width: 465px) {
+  .navbar-nav {
+      align-items: flex-start;
+  }
+}
